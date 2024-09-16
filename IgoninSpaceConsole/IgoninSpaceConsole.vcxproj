@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,7 +128,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="IgoninAnimal.cpp" />
+    <ClCompile Include="IgoninForest.cpp" />
     <ClCompile Include="IgoninSpaceConsole.cpp" />
+    <ClCompile Include="SubFunc.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IgoninAnimal.h" />
+    <ClInclude Include="IgoninForest.h" />
+    <ClInclude Include="SubFunc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
