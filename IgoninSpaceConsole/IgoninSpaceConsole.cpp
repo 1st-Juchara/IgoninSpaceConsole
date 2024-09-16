@@ -21,7 +21,8 @@ int main()
         cout << "3. Описание животных" << endl;
         cout << "4. Сохранить лес" << endl;
         cout << "5. Загрузить лес" << endl;
-        cout << "6. Удалить лес";
+        cout << "6. Очистить лес" << endl;
+        cout << "7. Удалить лес";
         
         int choice = tryChoose(0, 7);
 
@@ -44,6 +45,8 @@ int main()
             break;
         case 6:
             forest->ClearForest();
+            break;
+        case 7:
             delete forest;
             break;
         default:
