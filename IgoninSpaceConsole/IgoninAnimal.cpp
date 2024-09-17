@@ -41,7 +41,7 @@ void IgoninAnimal::SetWeight()
 void IgoninAnimal::SetParamsFromConsole(const int& mode)
 {
 	int userChoice = mode;
-	if (mode == -1) {
+	if (mode == 0) {
 		cout << "Что вы хотите ввести?" << endl;
 		cout << "1. Ввести имя животного" << endl;
 		cout << "2. Ввести цвет животного" << endl;

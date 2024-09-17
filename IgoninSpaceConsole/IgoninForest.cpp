@@ -14,9 +14,11 @@ void IgoninForest::AddAnimalsConsole()
 
 void IgoninForest::ChangeAnimal()
 {
-	CastForestToCosole();
-	int index_ch = enterElement(animals.size());
-	animals[index_ch - 1]->SetParamsFromConsole();
+	if (!IsForestEmpty()) {
+		CastForestToCosole();
+		int index_ch = enterElement(animals.size());
+		animals[index_ch]->SetParamsFromConsole();
+	}
 }
 
 void IgoninForest::CastForestToCosole(const vector<int>& indices)
@@ -37,14 +39,16 @@ void IgoninForest::CastForestToCosole(const vector<int>& indices)
 
 void IgoninForest::CastForestToFile()
 {
-	string file_name = chooseFiles();
-	if (!file_name.empty()) {
-		ofstream fout(file_name, ios_base::out | ios_base::trunc);// out - открыте для записи, trunc - удаление содержимого
-		fout << animals.size() << endl;
-		for (int i = 0; i < animals.size(); i++) {
-			animals[i]->CastAnimalToFile(fout);
+	if (!IsForestEmpty()) {
+		string file_name = chooseFiles();
+		if (!file_name.empty()) {
+			ofstream fout(file_name, ios_base::out | ios_base::trunc);// out - открыте для записи, trunc - удаление содержимого
+			fout << animals.size() << endl;
+			for (int i = 0; i < animals.size(); i++) {
+				animals[i]->CastAnimalToFile(fout);
+			}
+			fout.close();
 		}
-		fout.close();
 	}
 }
 
@@ -68,6 +72,17 @@ void IgoninForest::AddAnimalsFile()
 		else
 			cout << "Error: can't find save file" << endl;
 	}
+}
+
+bool IgoninForest::IsForestEmpty()
+{
+	if (animals.empty()) {
+		cout << "Список животных пуст\n\n";
+		return true;
+	}
+	else
+		return false;
+
 }
 
 void IgoninForest::ClearForest()

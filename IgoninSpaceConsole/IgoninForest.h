@@ -15,6 +15,7 @@ public:
     void CastForestToCosole(const vector<int>& indices = {});
     void CastForestToFile();
     void AddAnimalsFile();
+    bool IsForestEmpty();
     void ClearForest();
 };
 
