@@ -23,18 +23,21 @@ void IgoninForest::ChangeAnimal()
 
 void IgoninForest::CastForestToCosole(const vector<int>& indices)
 {
-	if (indices.empty())
-		for (int i = 0; i < animals.size(); i++) {
-			cout << "Животное №" << i + 1 << endl;
-			animals[i]->CastAnimalToConsole();
-			cout << endl;
-		}
-	else
-		for (int i = 0; i < indices.size(); i++) {
-			cout << "Животное №" << indices[i] << endl;
-			animals[indices[i]]->CastAnimalToConsole();
-			cout << endl;
-		}
+	if (!IsForestEmpty()) {
+		if (indices.empty())
+			for (int i = 0; i < animals.size(); i++) {
+				cout << "Животное №" << i + 1 << endl;
+				animals[i]->CastAnimalToConsole();
+				cout << endl;
+			}
+		else
+			for (int i = 0; i < indices.size(); i++) {
+				cout << "Животное №" << indices[i] << endl;
+				animals[indices[i]]->CastAnimalToConsole();
+				cout << endl;
+			}
+	}
+	
 }
 
 void IgoninForest::CastForestToFile()

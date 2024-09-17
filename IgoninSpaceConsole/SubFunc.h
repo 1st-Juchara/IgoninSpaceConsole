@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <map>
 #include <windows.h> 
+#include <excpt.h>
 //#include <functional>
 
 bool inString(std::string str_where, std::string str_what);
