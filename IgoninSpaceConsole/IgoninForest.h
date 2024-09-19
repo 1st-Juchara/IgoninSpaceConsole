@@ -12,10 +12,10 @@ public:
     ~IgoninForest();
     void AddAnimalsConsole();
     void ChangeAnimal();
-    void CastForestToCosole(const vector<int>& indices = {});
-    void CastForestToFile();
-    void AddAnimalsFile();
+    void PrintToCosole(const vector<int>& indices = {});
+    void Save();
+    void Load();
     bool IsForestEmpty();
-    void ClearForest();
+    void Clear();
 };
 

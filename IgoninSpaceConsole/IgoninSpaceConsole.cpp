@@ -12,39 +12,44 @@ int main()
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    IgoninForest* forest = new IgoninForest;
+    IgoninForest forest;
+    bool working = true;
 
-    while (true)
+    while (working)
     {
             cout << "1. Добавить животное" << endl;
             cout << "2. Изменить животное" << endl;
             cout << "3. Описание животных" << endl;
             cout << "4. Сохранить лес" << endl;
             cout << "5. Загрузить лес" << endl;
-            cout << "6. Очистить лес";
+            cout << "6. Очистить лес" << endl;
+            cout << "0. Выход";
 
-            int choice = tryChoose(0, 7);
+            int choice = tryInputNum(0, 7);
 
             switch (choice)
             {
             case 1:
-                forest->AddAnimalsConsole();
+                forest.AddAnimalsConsole();
                 break;
             case 2:
-                forest->ChangeAnimal();
+                forest.ChangeAnimal();
                 break;
             case 3:
-                forest->CastForestToCosole();
+                forest.PrintToCosole();
                 break;
             case 4:
-                forest->CastForestToFile();
+                forest.Save();
                 break;
             case 5:
-                forest->AddAnimalsFile();
+                forest.Load();
                 break;
             case 6:
-                forest->ClearForest();
+                forest.Clear();
                 break;
+            case 0:
+                forest.Clear();
+                return 0;
             default:
                 break;
             }

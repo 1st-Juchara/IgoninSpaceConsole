@@ -2,72 +2,72 @@
 
 IgoninForest::~IgoninForest()
 {
-	ClearForest();
+	Clear();
 }
 
 void IgoninForest::AddAnimalsConsole()
 {
 	IgoninAnimal* animal = new IgoninAnimal();
-	animal->SetParamsFromConsole(6);
+	animal->SetParamsFromConsole(0);
 	animals.push_back(animal);
 }
 
 void IgoninForest::ChangeAnimal()
 {
 	if (!IsForestEmpty()) {
-		CastForestToCosole();
+		PrintToCosole();
 		int index_ch = enterElement(animals.size());
 		animals[index_ch]->SetParamsFromConsole();
 	}
 }
 
-void IgoninForest::CastForestToCosole(const vector<int>& indices)
+void IgoninForest::PrintToCosole(const vector<int>& indices)
 {
 	if (!IsForestEmpty()) {
 		if (indices.empty())
 			for (int i = 0; i < animals.size(); i++) {
 				cout << "Животное №" << i + 1 << endl;
-				animals[i]->CastAnimalToConsole();
+				animals[i]->PrintAnimal();
 				cout << endl;
 			}
 		else
 			for (int i = 0; i < indices.size(); i++) {
 				cout << "Животное №" << indices[i] << endl;
-				animals[indices[i]]->CastAnimalToConsole();
+				animals[indices[i]]->PrintAnimal();
 				cout << endl;
 			}
 	}
 	
 }
 
-void IgoninForest::CastForestToFile()
+void IgoninForest::Save()
 {
 	if (!IsForestEmpty()) {
-		string file_name = chooseFiles();
+		string file_name = chooseFiles(true);
 		if (!file_name.empty()) {
 			ofstream fout(file_name, ios_base::out | ios_base::trunc);// out - открыте для записи, trunc - удаление содержимого
 			fout << animals.size() << endl;
-			for (int i = 0; i < animals.size(); i++) {
-				animals[i]->CastAnimalToFile(fout);
+			for (auto animal : animals) {//!!!!!!!!!!!!!
+				animal->SaveAnimal(fout);
 			}
 			fout.close();
 		}
 	}
 }
 
-void IgoninForest::AddAnimalsFile()
+void IgoninForest::Load()
 {
 	string file_name = chooseFiles();
 	if (!file_name.empty()) {
-		ClearForest();
 		ifstream fin(file_name);
 		if (fin.is_open())
 		{
+			Clear();
 			int animal_cnt;
 			fin >> animal_cnt;
 			for (int i = 0; i < animal_cnt; i++) {
 				IgoninAnimal* animal = new IgoninAnimal;
-				animal->SetParamsFromFile(fin);
+				animal->SetParamsFromFile(fin);// проверка .fail()
 				animals.push_back(animal);
 			}
 			fin.close();
@@ -88,7 +88,7 @@ bool IgoninForest::IsForestEmpty()
 
 }
 
-void IgoninForest::ClearForest()
+void IgoninForest::Clear()
 {
 	for (auto animal : this->animals) {
 		delete animal;
