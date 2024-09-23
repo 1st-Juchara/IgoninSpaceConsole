@@ -48,7 +48,7 @@ void IgoninForest::Save()
 			ofstream fout(file_name, ios_base::out | ios_base::trunc);// out - открыте для записи, trunc - удаление содержимого
 			fout << animals.size() << endl;
 			for (auto animal : animals) {//!!!!!!!!!!!!!
-				animal->SaveAnimal(fout);
+				fout << *animal;
 			}
 			fout.close();
 		}
@@ -63,17 +63,26 @@ void IgoninForest::Load()
 		if (fin.is_open())
 		{
 			Clear();
-			int animal_cnt;
+			bool Error = false;
+			int animal_cnt = 0;
 			fin >> animal_cnt;
+			Error = animal_cnt == 0 ? true : false;
 			for (int i = 0; i < animal_cnt; i++) {
 				IgoninAnimal* animal = new IgoninAnimal;
-				animal->SetParamsFromFile(fin);// проверка .fail()
-				animals.push_back(animal);
+				if ((fin >> *animal).fail())
+				{
+					Error = true;
+					break;
+				}
+				else
+					animals.push_back(animal);
 			}
 			fin.close();
+			if (Error)
+				cout << "Ошибка: файл поврежден\n\n";
 		}
 		else
-			cout << "Error: can't find save file" << endl;
+			cout << "Ошибка: файл не найден\n\n";
 	}
 }
 

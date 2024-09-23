@@ -2,8 +2,6 @@
 
 using namespace std;
 
-
-
 void IgoninAnimal::SetEnumAttribute(const vector<std::string>& params, int& attribute)
 {
 	for (int i = 0; i < params.size(); i++)
@@ -46,9 +44,9 @@ void IgoninAnimal::SetParamsFromConsole(const int& mode)
 		cout << "Введите имя животного:\n\n>";
 		SetStringAttribute(name);
 		cout << "Выберите цвет животного:";
-		SetEnumAttribute(animalColors, animalColor);
+		SetEnumAttribute(animalColors, Color);
 		cout << "Выберите цвет животного:";
-		SetEnumAttribute(nutritionTypes, animalNutrition);
+		SetEnumAttribute(nutritionTypes, Nutrition);
 		cout << "Введите возраст животного:";
 		SetNumAttribute(age, 0, 200);
 		cout << "Введите вес животного:";
@@ -58,10 +56,10 @@ void IgoninAnimal::SetParamsFromConsole(const int& mode)
 		SetStringAttribute(name);
 		break;
 	case 2:
-		SetEnumAttribute(animalColors, animalColor);
+		SetEnumAttribute(animalColors, Color);
 		break;
 	case 3:
-		SetEnumAttribute(nutritionTypes, animalNutrition);
+		SetEnumAttribute(nutritionTypes, Nutrition);
 		break;
 	case 4:
 		SetNumAttribute(age, 0, 200);
@@ -72,32 +70,42 @@ void IgoninAnimal::SetParamsFromConsole(const int& mode)
 	default:
 		break;
 	}
-}
+} 
 
-void IgoninAnimal::SetParamsFromFile(std::ifstream& fin)
-{
-	fin.ignore(10000, '\n');
-	getline(fin, name);
-	fin >> animalColor;
-	fin >> animalNutrition;
-	fin >> age;
-	fin >> weight;
-}
 
 void IgoninAnimal::PrintAnimal()
 {
 	cout << format("{:<15}", "Имя: ") << name << endl; 
-	cout << format("{:<15}", "Цвет: ") << animalColors[animalColor] << endl;
-	cout << format("{:<15}", "Тип питания: ") << nutritionTypes[animalNutrition] << endl;
+	cout << format("{:<15}", "Цвет: ");
+
+	SetConsoleTextAttribute(consoleColor, colorsCodes[Color]);
+	cout << animalColors[Color] << endl;
+	SetConsoleTextAttribute(consoleColor, (WORD)((0 << 4) | 15));
+
+	cout << format("{:<15}", "Тип питания: ") << nutritionTypes[Nutrition] << endl;
 	cout << format("{:<15}", "Возраст: ") << age << endl;
 	cout << format("{:<15}", "Вес: ") << weight << endl;
 }
 
-void IgoninAnimal::SaveAnimal(std::ofstream& fout)
+std::ifstream& operator>>(ifstream& fin, IgoninAnimal& animal)
 {
-	fout << name << endl;
-	fout << animalColor << ' ';
-	fout << animalNutrition << ' ';
-	fout << age << ' ';
-	fout << weight << endl;
+	fin.ignore(10000, '\n');
+	getline(fin, animal.name);
+	fin >> animal.Color;
+	fin >> animal.Nutrition;
+	fin >> animal.age;
+	fin >> animal.weight;
+		
+	return fin;
+}
+
+std::ofstream& operator<<(ofstream& fout, IgoninAnimal& animal)
+{
+	fout << animal.name << endl;
+	fout << animal.Color << ' ';
+	fout << animal.Nutrition << ' ';
+	fout << animal.age << ' ';
+	fout << animal.weight << endl;
+
+	return fout;
 }
