@@ -27,6 +27,9 @@
     <ClCompile Include="IgoninForest.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="IgoninReptile.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SubFunc.h">
@@ -36,6 +39,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="IgoninForest.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="IgoninReptile.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

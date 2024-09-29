@@ -23,14 +23,14 @@ double tryInputNum(double min, double max)// <T> min max
     return num;
 }
 
-int enterElement(int elements_cnt)
+int selectElement(int elements_cnt)
 {
-    cout << "Введите индекс объекта:";
+    cout << "Введите индекс:";
     int index_ch = tryInputNum(1, elements_cnt) - 1;
     return index_ch;
 }
 
-std::string chooseFiles(const bool& out)
+std::string chooseFiles(bool out)
 {// is_absolute, vector<string> files, check typr (string, int)?
     string name;
     cout << "Выберите файл:\n" << endl;
@@ -54,10 +54,47 @@ std::string chooseFiles(const bool& out)
     {
         cout << "Введите имя файла\n\n>";
         inputString(cin, name);
-        return name;
+        if (filesystem::path(name).is_absolute())
+            return name;
+        else
+            return R"(Saves\)" + name;
     }
     else
         return R"(Saves\)" + files[selectedFileIndex - 1];
+}
+
+void SetEnumAttribute(const std::vector<std::string>& params, int& attribute, const string& attributeName)
+{
+    cout << "Выберите " << attributeName << ":" << endl;
+    for (int i = 0; i < params.size(); i++)
+        cout << endl << i + 1 << ". " << params[i];
+    attribute = tryInputNum(1, params.size()) - 1;
+}
+
+void SetStringAttribute(std::string& attribute, const string& attributeName)
+{
+    cout << "Введите " << attributeName << ":";
+    cout << "\n\n> ";
+    inputString(cin, attribute);
+}
+
+void SetNumAttribute(double& attribute, double min, double max, const string& attributeName)
+{
+    cout << "Введите " << attributeName << ":";
+    if (min > max)
+    {
+        cout << "Ошибка: минимальное число больше максимального";
+        return;
+    }
+    attribute = tryInputNum(min, max);
+}
+
+void SetBoolAttribute(const std::pair<std::string, std::string>& options, bool& attribute, const string& attributeName)
+{
+    cout << "Выберите " << attributeName << ":" << endl;
+    cout << "1. " << options.first << endl;
+    cout << "2. " << options.second;
+    attribute = tryInputNum(1, 2) == 1;
 }
 
 

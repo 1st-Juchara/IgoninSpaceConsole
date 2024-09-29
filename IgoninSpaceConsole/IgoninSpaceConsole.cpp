@@ -33,22 +33,21 @@ int main()
                 forest.AddAnimalsConsole();
                 break;
             case 2:
-                forest.ChangeAnimal();
+                forest.ChangeElement();
                 break;
             case 3:
                 forest.PrintToCosole();
                 break;
             case 4:
-                forest.Save();
+                forest.SaveSer();
                 break;
             case 5:
-                forest.Load();
+                forest.LoadSer();
                 break;
             case 6:
                 forest.Clear();
                 break;
             case 0:
-                forest.Clear();
                 return 0;
             default:
                 break;

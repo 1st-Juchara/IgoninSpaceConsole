@@ -1,6 +1,7 @@
 #pragma once
 #include "SubFunc.h"
 #include "IgoninAnimal.h"
+#include "IgoninReptile.h"
 
 using namespace std;
 
@@ -8,14 +9,24 @@ class IgoninForest
 {
 private:
     vector<IgoninAnimal*> animals;
+    vector<IgoninReptile*> reptiles;
+    void AddAnimalConsole();
+    void AddReptileConsole();
 public:
     ~IgoninForest();
     void AddAnimalsConsole();
+    void ChangeElement();
     void ChangeAnimal();
-    void PrintToCosole(const vector<int>& indices = {});
+    void ChangeReptile();
+    void PrintToCosole();
+    void PrintAnimals();
+    void PrintReptiles();
     void Save();
+    void SaveSer();
+    void LoadSer();
     void Load();
-    bool IsForestEmpty();
+    bool IsAnimalsEmpty();
+    bool IsReptilesEmpty();
     void Clear();
 };
 
