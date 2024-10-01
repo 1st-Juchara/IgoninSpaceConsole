@@ -1,5 +1,6 @@
 #pragma once
 #include "IgoninAnimal.h"
+#include <boost/serialization/base_object.hpp>
 
 class IgoninReptile : public IgoninAnimal
 {
@@ -13,7 +14,7 @@ private:
 public:
     template<class Archive>
     void serialize(Archive& ar, const unsigned int version) {
-        IgoninAnimal::serialize(ar, version);
+        ar& boost::serialization::base_object<IgoninAnimal>(*this);
         ar& isPoisonous;
         ar& tailLength;
     }

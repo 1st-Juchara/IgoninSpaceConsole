@@ -1,4 +1,5 @@
 #include "IgoninAnimal.h"
+#include "IgoninForest.h"
 using namespace std;
 
 std::vector<std::string> IgoninAnimal::setterOptions()

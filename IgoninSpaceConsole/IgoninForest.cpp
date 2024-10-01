@@ -1,5 +1,10 @@
 #include "IgoninForest.h"
 
+
+
+BOOST_CLASS_EXPORT_GUID(IgoninAnimal, "IgoninAnimal")
+BOOST_CLASS_EXPORT_GUID(IgoninReptile, "IgoninReptile")
+
 IgoninForest::~IgoninForest()
 {
 	Clear();
@@ -19,29 +24,29 @@ void IgoninForest::AddAnimalsConsole()
 
 void IgoninForest::ChangeElement()
 {
-	cout << "Что вы хотите изменить?" << endl;
-	cout << "1. Животное" << endl;
-	cout << "2. Рептилию";
-	bool userChoice = tryInputNum(1, 2) == 1 ? true : false;
-
-	if (userChoice && !IsAnimalsEmpty())
-		ChangeAnimal();
-	if (!userChoice && !IsReptilesEmpty())
-		ChangeReptile();
+	//cout << "Что вы хотите изменить?" << endl;
+	//cout << "1. Животное" << endl;
+	//cout << "2. Рептилию";
+	//bool userChoice = tryInputNum(1, 2) == 1 ? true : false;
+	//
+	//if (userChoice && !IsAnimalsEmpty())
+	ChangeAnimal();
+	//if (!userChoice && !IsReptilesEmpty())
+	//	ChangeReptile();
 }
 
 void IgoninForest::AddAnimalConsole()
 {
-	IgoninAnimal* animal = new IgoninAnimal();
+	shared_ptr<IgoninAnimal> animal = make_shared<IgoninAnimal>();
 	animal->SetParamsFromConsole();
 	animals.push_back(animal);
 }
 
 void IgoninForest::AddReptileConsole()
 {
-	IgoninReptile* reptile = new IgoninReptile();
+	shared_ptr<IgoninReptile> reptile = make_shared<IgoninReptile>();
 	reptile->SetParamsFromConsole();
-	reptiles.push_back(reptile);
+	animals.push_back(reptile);
 }
 
 void IgoninForest::ChangeAnimal()
@@ -51,19 +56,19 @@ void IgoninForest::ChangeAnimal()
 	animals[index_ch]->SetParamsFromConsole();
 }
 
-void IgoninForest::ChangeReptile()
-{
-	PrintReptiles();
-	int index_ch = selectElement(reptiles.size());
-	reptiles[index_ch]->SetParamsFromConsole();
-}
+//void IgoninForest::ChangeReptile()
+//{
+//	PrintReptiles();
+//	int index_ch = selectElement(reptiles.size());
+//	reptiles[index_ch]->SetParamsFromConsole();
+//}
 
 void IgoninForest::PrintToCosole()
 {
 	if (!IsAnimalsEmpty()) 
 		PrintAnimals();
-	if (!IsReptilesEmpty())
-		PrintReptiles();
+	//if (!IsReptilesEmpty())
+	//	PrintReptiles();
 }
 
 void IgoninForest::PrintAnimals()
@@ -75,29 +80,14 @@ void IgoninForest::PrintAnimals()
 	}
 }
 
-void IgoninForest::PrintReptiles()
-{
-	for (int i = 0; i < reptiles.size(); i++) {
-		cout << "Рептилия" << " №" << i + 1 << endl;
-		cout << *reptiles[i];
-		cout << endl;
-	}
-}
-
-void IgoninForest::Save()
-{
-	if (!IsAnimalsEmpty()) {
-		string file_name = chooseFiles(true);
-		if (!file_name.empty()) {
-			ofstream fout(file_name, ios_base::out | ios_base::trunc);// out - открыте для записи, trunc - удаление содержимого
-			fout << animals.size() << endl;
-			for (auto animal : animals) {//!!!!!!!!!!!!!
-				fout << *animal;
-			}
-			fout.close();
-		}
-	}
-}
+//void IgoninForest::PrintReptiles()
+//{
+//	for (int i = 0; i < reptiles.size(); i++) {
+//		cout << "Рептилия" << " №" << i + 1 << endl;
+//		cout << *reptiles[i];
+//		cout << endl;
+//	}
+//}
 
 void IgoninForest::SaveSer()
 {
@@ -105,17 +95,18 @@ void IgoninForest::SaveSer()
 	if (!file_name.empty())
 	{
 		ofstream fout(file_name);
-		boost::archive::text_oarchive oa(fout);
+		if (fout)
+		{
+			boost::archive::text_oarchive oa(fout);
 
-		oa << animals.size();
-		for (auto animal : animals) {
-			oa << animal;
-		}
+			oa << animals;
 
-		oa << reptiles.size();
-		for (auto reptile : reptiles) {
-			oa << reptile;
+			fout.close();
 		}
+		//oa << reptiles.size();
+		//for (auto reptile : reptiles) {
+		//	oa << reptile;
+		//}
 	}
 }
 
@@ -125,69 +116,39 @@ void IgoninForest::LoadSer()
 
 	if (!file_name.empty())
 	{
+		// 
 		Clear();
 		std::ifstream fin(file_name);
-		boost::archive::text_iarchive ia(fin);
 
-		int animalsCount = 0;
-		ia >> animalsCount;
-
-		for (int i = 0; i < animalsCount; i++) {
-			IgoninAnimal* animal = nullptr;
-			ia >> animal;
-
-			if (animal == nullptr) {
-				cout << "Ошибка: файл поврежден\n\n";
-				Clear();
-			}
-			else
-				animals.push_back(animal);
-		}
-
-		int reptilesCount = 0;
-		ia >> reptilesCount;
-
-		for (int i = 0; i < reptilesCount; i++) {
-			IgoninReptile* reptile = nullptr;
-			ia >> reptile;
-
-			if (reptile == nullptr) {
-				cout << "Ошибка: файл поврежден\n\n";
-				Clear();
-			}
-			else
-				reptiles.push_back(reptile);
-		}
-	}
-}
-
-void IgoninForest::Load()
-{
-	string file_name = chooseFiles();
-	if (!file_name.empty()) {
-		ifstream fin(file_name);
-		if (fin.is_open())
+		if (fin)
 		{
-			Clear();
-			int animal_cnt = 0;
-			fin >> animal_cnt;
-			for (int i = 0; i < animal_cnt; i++) {
-				IgoninAnimal* animal = new IgoninAnimal;
-				if ((fin >> *animal).fail())
-				{
-					Clear();
-					delete animal;
-					break;
-				}
-				else
-					animals.push_back(animal);
+			try {
+				boost::archive::text_iarchive ia(fin);
+				ia >> animals;
 			}
-			if (!fin)
+			catch (const exception& e)
+			{
 				cout << "Ошибка: файл поврежден\n\n";
+				Clear();
+			}
 			fin.close();
 		}
-		else
-			cout << "Ошибка: файл не найден\n\n";
+		// в один вектор, сериализацию 
+		//int reptilesCount = 0;
+		//ia >> reptilesCount;
+
+		//for (int i = 0; i < reptilesCount; i++) {
+		//	try {
+		//		shared_ptr<IgoninReptile> reptile = nullptr;
+		//		ia >> reptile;
+		//		reptiles.push_back(reptile);
+		//	}
+		//	catch (const exception& e)
+		//	{
+		//		cout << "Ошибка: файл поврежден\n\n";
+		//		Clear();
+		//	}
+		//}
 	}
 }
 
@@ -202,26 +163,18 @@ bool IgoninForest::IsAnimalsEmpty()
 
 }
 
-bool IgoninForest::IsReptilesEmpty()
-{
-	if (reptiles.empty()) {
-		cout << "Список рептилий пуст\n\n";
-		return true;
-	}
-	else
-		return false;
-}
+//bool IgoninForest::IsReptilesEmpty()
+//{
+//	if (reptiles.empty()) {
+//		cout << "Список рептилий пуст\n\n";
+//		return true;
+//	}
+//	else
+//		return false;
+//}
 
 void IgoninForest::Clear()
 {
-	for (auto animal : animals) {
-		delete animal;
-	}
 	animals.clear();
-
-	for (auto reptile : reptiles) {
-		delete reptile;
-	}
-	reptiles.clear();
-
+	//reptiles.clear();
 }

@@ -1,4 +1,5 @@
 #include "IgoninReptile.h"
+#include "IgoninForest.h"
 
 using namespace std;
 
