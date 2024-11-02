@@ -13,6 +13,8 @@ double tryInputNum(double min, double max);
 
 int selectElement(int elements_cnt);
 
+std::vector<std::string> getFiles(std::string pathFromProject);
+
 std::string chooseFiles(bool out = false);
 
 void SetEnumAttribute(const std::vector<std::string>& params, int& attribute, const std::string& attributeName);
