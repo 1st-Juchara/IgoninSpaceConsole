@@ -7,9 +7,9 @@ std::vector<std::string> IgoninAnimal::setterOptions()
     return { "всё", "имя", "тип питания", "возраст", "вес", "цвет" };
 }
 
-map<string, string> IgoninAnimal::getAnimalData()
+unordered_map<string, string> IgoninAnimal::getAnimalData()
 {
-    map<string, string> animalData;
+    unordered_map<string, string> animalData;
     animalData.insert({"Имя", name});
     animalData.insert({"Тип питания", nutritionTypes[Nutrition]});
     animalData.insert({"Возраст", to_string(age)});

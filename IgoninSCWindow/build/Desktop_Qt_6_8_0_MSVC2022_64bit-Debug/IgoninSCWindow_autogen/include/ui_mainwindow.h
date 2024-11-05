@@ -15,6 +15,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QScrollBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
@@ -26,6 +27,8 @@ public:
     QAction *ButtonMenuFile;
     QAction *ButtonMenuForest;
     QWidget *centralwidget;
+    QScrollBar *horizontalScrollBar;
+    QScrollBar *verticalScrollBar;
     QMenuBar *menubar;
     QMenu *menu;
     QStatusBar *statusbar;
@@ -41,6 +44,14 @@ public:
         ButtonMenuForest->setObjectName("ButtonMenuForest");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
+        horizontalScrollBar = new QScrollBar(centralwidget);
+        horizontalScrollBar->setObjectName("horizontalScrollBar");
+        horizontalScrollBar->setGeometry(QRect(160, 520, 160, 16));
+        horizontalScrollBar->setOrientation(Qt::Orientation::Horizontal);
+        verticalScrollBar = new QScrollBar(centralwidget);
+        verticalScrollBar->setObjectName("verticalScrollBar");
+        verticalScrollBar->setGeometry(QRect(360, 380, 16, 160));
+        verticalScrollBar->setOrientation(Qt::Orientation::Vertical);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");

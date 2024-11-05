@@ -21,7 +21,7 @@ public:
         ar& isPoisonous;
         ar& tailLength;
     }
-    std::map<std::string, std::string> getAnimalData();
+    std::unordered_map<std::string, std::string> getAnimalData();
     void SetParamsFromConsole();
     void Print();
 };

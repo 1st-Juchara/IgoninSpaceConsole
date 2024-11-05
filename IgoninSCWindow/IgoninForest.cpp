@@ -177,16 +177,16 @@ string IgoninForest::Load(const string &fileName)
     return "Успешно загружено!";
 }
 
-vector<map<string, string>> IgoninForest::GetAnimals()
+vector<unordered_map<string, string>> IgoninForest::GetAnimals()
 {
-    vector<map<string, string>> animalsData;
+    vector<unordered_map<string, string>> animalsData;
     if (IsAnimalsEmpty())
-        animalsData.push_back(map<string, string>{{"Ошибка", "Лес пуст..."}});
+        animalsData.push_back(unordered_map<string, string>{{"Ошибка", "Лес пуст..."}});
     else
     {
         for (auto animal : animals)
         {
-            map<string, string> animalData = animal->getAnimalData();
+            unordered_map<string, string> animalData = animal->getAnimalData();
             animalsData.push_back(animalData);
         }
     }

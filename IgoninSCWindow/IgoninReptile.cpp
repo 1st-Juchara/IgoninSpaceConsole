@@ -13,9 +13,9 @@ std::vector<std::string> IgoninReptile::setterOptions()
     return all;
 }
 
-std::map<std::string, std::string> IgoninReptile::getAnimalData()
+std::unordered_map<std::string, std::string> IgoninReptile::getAnimalData()
 {
-    map<string, string> animalData = IgoninAnimal::getAnimalData();
+    unordered_map<string, string> animalData = IgoninAnimal::getAnimalData();
     animalData.insert({"Ядовитость", isPoisonous ? PoisonousState.first : PoisonousState.second});
     animalData.insert({"Длина хвоста", to_string(tailLength)});
     return animalData;

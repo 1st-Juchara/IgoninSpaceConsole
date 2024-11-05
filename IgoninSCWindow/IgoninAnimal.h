@@ -3,7 +3,10 @@
 #pragma once
 #include "SubFunc.h"
 #include <Windows.h>
+#include <unordered_map>
 #include <map>
+
+using namespace std;
 
 class IgoninAnimal
 {
@@ -31,7 +34,7 @@ public:
         ar& age;
         ar& weight;
     }
-    virtual std::map<std::string, std::string> getAnimalData();
+    virtual std::unordered_map<std::string, std::string> getAnimalData();
     virtual void SetParamsFromConsole();
     virtual void Print();
 };

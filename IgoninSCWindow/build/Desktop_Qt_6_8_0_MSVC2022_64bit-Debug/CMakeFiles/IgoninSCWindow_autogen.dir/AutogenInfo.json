@@ -350,12 +350,6 @@
 			null
 		],
 		[
-			"D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/igoninforestvm.h",
-			"MU",
-			"EWIEGA46WW/moc_igoninforestvm.cpp",
-			null
-		],
-		[
 			"D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -440,11 +434,6 @@
 		],
 		[
 			"D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/filedialog.cpp",
-			"MU",
-			null
-		],
-		[
-			"D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/igoninforestvm.cpp",
 			"MU",
 			null
 		],
