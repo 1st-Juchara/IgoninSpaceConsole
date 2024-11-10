@@ -25,7 +25,8 @@ class Ui_MainWindow
 {
 public:
     QAction *ButtonMenuFile;
-    QAction *ButtonMenuForest;
+    QAction *ButtonMenuSave;
+    QAction *ButtonMenuClear;
     QWidget *centralwidget;
     QScrollBar *horizontalScrollBar;
     QScrollBar *verticalScrollBar;
@@ -40,8 +41,10 @@ public:
         MainWindow->resize(800, 600);
         ButtonMenuFile = new QAction(MainWindow);
         ButtonMenuFile->setObjectName("ButtonMenuFile");
-        ButtonMenuForest = new QAction(MainWindow);
-        ButtonMenuForest->setObjectName("ButtonMenuForest");
+        ButtonMenuSave = new QAction(MainWindow);
+        ButtonMenuSave->setObjectName("ButtonMenuSave");
+        ButtonMenuClear = new QAction(MainWindow);
+        ButtonMenuClear->setObjectName("ButtonMenuClear");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         horizontalScrollBar = new QScrollBar(centralwidget);
@@ -65,7 +68,8 @@ public:
 
         menubar->addAction(menu->menuAction());
         menu->addAction(ButtonMenuFile);
-        menu->addAction(ButtonMenuForest);
+        menu->addAction(ButtonMenuSave);
+        menu->addAction(ButtonMenuClear);
 
         retranslateUi(MainWindow);
 
@@ -75,8 +79,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        ButtonMenuFile->setText(QCoreApplication::translate("MainWindow", "\320\244\320\260\320\271\320\273", nullptr));
-        ButtonMenuForest->setText(QCoreApplication::translate("MainWindow", "\320\233\320\265\321\201", nullptr));
+        ButtonMenuFile->setText(QCoreApplication::translate("MainWindow", "\320\227\320\260\320\263\321\200\321\203\320\267\320\270\321\202\321\214", nullptr));
+        ButtonMenuSave->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", nullptr));
+        ButtonMenuClear->setText(QCoreApplication::translate("MainWindow", "\320\236\321\207\320\270\321\201\321\202\320\270\321\202\321\214", nullptr));
         menu->setTitle(QCoreApplication::translate("MainWindow", "\320\234\320\265\320\275\321\216", nullptr));
     } // retranslateUi
 

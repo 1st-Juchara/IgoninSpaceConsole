@@ -25,6 +25,7 @@ D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/build/Desktop_Qt_6_8_0_MS
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qbytearrayalgorithms.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qbytearraylist.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qbytearrayview.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qcalendar.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qchar.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qcompare.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qcompare_impl.h \
@@ -41,12 +42,18 @@ D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/build/Desktop_Qt_6_8_0_MS
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qcoreevent.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qdarwinhelpers.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qdatastream.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qdatetime.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qdeadlinetimer.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qdebug.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qdir.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qdirlisting.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qelapsedtimer.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qendian.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qeventloop.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qexceptionhandling.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qfile.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qfiledevice.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qfileinfo.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qflags.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qfloat16.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qforeach.h \
@@ -120,6 +127,7 @@ D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/build/Desktop_Qt_6_8_0_MS
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qtenvironmentvariables.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qtextstream.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qtimer.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qtimezone.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qtmetamacros.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qtnoop.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/qtpreprocessorsupport.h \
@@ -180,14 +188,19 @@ D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/build/Desktop_Qt_6_8_0_MS
   D:/Qt_____/6.8.0/msvc2022_64/include/QtGui/qwindowdefs.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtGui/qwindowdefs_win.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/QDialog \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/QFileDialog \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/QGridLayout \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/QMainWindow \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/QMessageBox \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qboxlayout.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qdialog.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qdialogbuttonbox.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qfiledialog.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qgridlayout.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qlayout.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qlayoutitem.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qmainwindow.h \
+  D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qmessagebox.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qsizepolicy.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qtabwidget.h \
   D:/Qt_____/6.8.0/msvc2022_64/include/QtWidgets/qtwidgets-config.h \

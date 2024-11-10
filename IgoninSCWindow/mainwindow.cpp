@@ -9,37 +9,15 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    table.resize(30);
+    //table.resize(30);
 
-    for (int i = 0; i < 30; i++)
-    {
-        for (int j = 0; j < 50; j++)
-        {
-            table[i].insert({to_string(j*10), to_string((i + j*10) * 5)});
-        }
-    }
-
-    /*
-    table[0].insert({"NAME", "name_111"});
-    table[0].insert({"AGE", "11"});
-    table[0].insert({"POCT", "111"});
-
-    table[1].insert({"NAME", "name_222"});
-    table[1].insert({"AGE", "12"});
-    table[1].insert({"POCT", "122"});
-    table[1].insert({"JOB", "govno4ist"});
-
-    table[2].insert({"NAME", "name_333"});
-    table[2].insert({"AGE", "13"});
-    table[2].insert({"POCT", "133"});
-    table[2].insert({"HOBBY", "fishing"});
-
-    table[3].insert({"NAME", "name_444"});
-    table[3].insert({"AGE", "14"});
-    table[3].insert({"POCT", "144"});
-    table[3].insert({"JOB", "miner"});
-    table[3].insert({"HOBBY", "mine"});
-    */
+    //for (int i = 0; i < 30; i++)
+    //{
+    //    for (int j = 0; j < 50; j++)
+    //    {
+    //        table[i].insert({to_string(j*10), to_string((i + j*10) * 5)});
+    //    }
+    //}
 }
 
 MainWindow::~MainWindow()
@@ -80,8 +58,8 @@ void MainWindow::getTableSize(QPainter& painter)
             int cellWidth = painter.fontMetrics().horizontalAdvance(QString("").fromStdString(cell.second));
             ++columns;
             //debug
-            QString key = QString("").fromStdString(cell.first);
-            painter.drawText(columns * 60 + 50, 200 + ggg*30, key);
+            //QString key = QString("").fromStdString(cell.first);
+            //painter.drawText(columns * 60 + 50, 200 + ggg*30, key);
             //
             bool newHead = true;
             for (string columnHead : head)
@@ -112,93 +90,110 @@ void MainWindow::getTableSize(QPainter& painter)
     setScrolls();
 }
 
-pair<int, int> MainWindow::viewTableSize()
-{
-    int winHeight = this->height() - scrollBarSize;
-    int winWidth = this->width() - scrollBarSize;
-    pair<int, int> viewTableParams;
-    viewTableParams.first = winHeight / tableParams.rowHeight; // window_height div font_height
-    viewTableParams.second = winWidth;
-    return viewTableParams;
-}
-
 void MainWindow::setScrolls()
 {
-    int winHeight = this->height() - scrollBarSize;
-    int winWidth = this->width() - scrollBarSize;
-    ui->horizontalScrollBar->setGeometry(0, winHeight, winWidth, scrollBarSize);
-    ui->verticalScrollBar->setGeometry(winWidth, 0, scrollBarSize, winHeight);
+    int winHeight = this->height();
+    int winWidth = this->width();
+    ui->horizontalScrollBar->setGeometry(0, winHeight - 42 - scrollBarSize, winWidth - scrollBarSize, scrollBarSize);
+    ui->verticalScrollBar->setGeometry(winWidth - scrollBarSize, 0, scrollBarSize, winHeight - scrollBarSize*2);
 
-    int width = 0;
+    int width = scrollBarSize;
     for (pair<string, int> columnWidth : tableParams.columnWidths){
         width += columnWidth.second;
     }
-    int height = tableParams.rows;
+    int height = tableParams.rows * tableParams.rowHeight + scrollBarSize + upperMerge;
 
-    if (width - winWidth <= 0) {
+    //qDebug() << QString::number(width) << " : " << QString::number(height);
+
+    if (width - winWidth + mergeWidth <= 0) {
         ui->horizontalScrollBar->setDisabled(true);
         ui->horizontalScrollBar->setVisible(false);
     }
     else {
-        ui->horizontalScrollBar->setMaximum(width - winWidth);
+        ui->horizontalScrollBar->setDisabled(false);
+        ui->horizontalScrollBar->setVisible(true);
+        ui->horizontalScrollBar->setMaximum(width - winWidth + mergeWidth);
         ui->horizontalScrollBar->setMinimum(0);
+        startPos.first = ui->horizontalScrollBar->value() + mergeWidth;
     }
-    if (height - winHeight / tableParams.rowHeight + upperMerge <= 0) {
+    if (height - winHeight + scrollBarSize <= 0) {
         ui->verticalScrollBar->setDisabled(true);
         ui->verticalScrollBar->setVisible(false);
     }
     else {
-        ui->verticalScrollBar->setMaximum(height - winHeight / tableParams.rowHeight + upperMerge);
-        ui->verticalScrollBar->setMinimum(upperMerge);
+        ui->verticalScrollBar->setDisabled(false);
+        ui->verticalScrollBar->setVisible(true);
+        ui->verticalScrollBar->setMaximum((height - winHeight + scrollBarSize) / tableParams.rowHeight);
+        ui->verticalScrollBar->setMinimum(0);
+        startPos.second = ui->verticalScrollBar->value() + upperMerge;
     }
-
-    startPos = {0, upperMerge};
 }
 
 void MainWindow::paintTable(QPainter& painter)
 {
-    // table, tableParams, viewTableSize(pair int), ui ScrollBars values
-    int rowsCnt = (this->height() - scrollBarSize) / tableParams.rowHeight;
-    pair<int, int> leftRightInx = {ui->verticalScrollBar->value(), ui->verticalScrollBar->value() + this->width() - scrollBarSize};
-    pair<int, int> topDownInx = {ui->horizontalScrollBar->value(), ui->horizontalScrollBar->value() + rowsCnt};
+    auto drawTextFunc = static_cast<void (QPainter::*)(int, int, const QString&)>(&QPainter::drawText);
+    auto drawCell = std::bind(drawTextFunc, &painter, placeholders::_1, placeholders::_2, placeholders::_3);
 
     pair<int, int> pos = startPos;
     for (int inx = 0; inx < tableParams.head.size(); inx++)
     {
         QString columnHead = QString("").fromStdString(tableParams.head[inx]);
-        //painter.drawText(pos.first, pos.second, columnHead);
+        drawCell(pos.first, pos.second, columnHead);
+        painter.drawLine(pos.first - mergeWidth / 2, pos.second, pos.first - mergeWidth / 2,
+                         pos.second + tableParams.rowHeight*tableParams.rows);
+        painter.drawLine(pos.first + tableParams.columnWidths[tableParams.head[inx]] - mergeWidth / 2, pos.second,
+                         pos.first + tableParams.columnWidths[tableParams.head[inx]] - mergeWidth / 2, pos.second + tableParams.rowHeight*tableParams.rows);
+
         for (auto row : table)
         {
             pos.second += tableParams.rowHeight;
             if (row.find(tableParams.head[inx]) != row.end())
             {
-                QString cell = QString("").fromStdString(row[tableParams.head[inx]]);
-                painter.drawText(pos.first, pos.second, cell);
+                QString cell;
+                if (tableParams.head[inx].compare("Имя") == 0)
+                    cell = QString("").fromLocal8Bit(row[tableParams.head[inx]].c_str());
+                else
+                    cell = QString("").fromStdString(row[tableParams.head[inx]].c_str());
+                drawCell(pos.first, pos.second, cell);
             }
             else
-                painter.drawText(pos.first, pos.second, "---");
+                drawCell(pos.first, pos.second, "---");
         }
         pos.second = startPos.second;
         pos.first += tableParams.columnWidths[tableParams.head[inx]];
     }
+
+    painter.drawLine(startPos.first - mergeWidth / 2, startPos.second + mergeHeight / 2,
+                     pos.first - mergeWidth / 2, startPos.second + mergeHeight / 2);
+}
+
+void MainWindow::clearTable()
+{
+    table.clear();
+    forest.Clear();
+    tableParams = TableParams();
 }
 
 void MainWindow::on_ButtonMenuFile_triggered()
 {
-    //file menu
-    /*
-    QVector<QString> fileNames;
-    for (string fileName : getFiles("Saves"))
-        fileNames.push_back(QString("").fromStdString(fileName));
-    if (fileNames.empty())
-        fileNames.push_back("folder is empty");
-    */
-    d.show();
-}
+    QString filename = QFileDialog::getOpenFileName(nullptr, "Открыть файл", "Saves", "Все Файлы (*)");
+    if (filename.isEmpty()) {
+        return;
+    }
 
+    string convertedFilename = filename.toStdString();
 
-void MainWindow::on_ButtonMenuForest_triggered()
-{
+    string message = forest.Load(convertedFilename);
+    if (message.empty())
+    {
+        table = forest.GetAnimals();
+        QMessageBox::information(nullptr, "Успех", "Загрузка удалась");
+    }
+    else
+    {
+        QMessageBox::information(nullptr, "Ошибка", QString("").fromStdString(message));
+    }
+
     repaint();
 }
 
@@ -212,20 +207,48 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 void MainWindow::on_verticalScrollBar_valueChanged(int value)
 {
-    if (value != ui->verticalScrollBar->maximum() && value != ui->verticalScrollBar->minimum())
-    {
-        startPos.second = -value * tableParams.rowHeight;
-        repaint();
-    }
+    startPos.second = -value * tableParams.rowHeight + upperMerge;
+    repaint();
 }
 
 
 void MainWindow::on_horizontalScrollBar_valueChanged(int value)
 {
-    if (value != ui->horizontalScrollBar->maximum() && value != ui->verticalScrollBar->minimum())
-    {
-        startPos.first = -value;
-        repaint();
+    startPos.first = -value  + mergeWidth;
+    repaint();
+}
+
+
+void MainWindow::on_ButtonMenuSave_triggered()
+{
+    if (forest.IsAnimalsEmpty()) {
+        QMessageBox::information(nullptr, "Ошибка", "Лес пуст...");
+        return;
     }
+
+    QString filename = QFileDialog::getSaveFileName(nullptr, "Сохранить файл", "Saves", "Все Файлы (*)");
+    if (filename.isEmpty()) {
+        return;
+    }
+
+    string convertedFilename = filename.toStdString();
+
+    string message = forest.Save(convertedFilename);
+
+    if (message.empty())
+    {
+        QMessageBox::information(nullptr, "Успех", "Лес сохранён");
+    }
+    else
+    {
+        QMessageBox::information(nullptr, "Ошибка", QString("").fromStdString(message));
+    }
+}
+
+
+void MainWindow::on_ButtonMenuClear_triggered()
+{
+    clearTable();
+    repaint();
 }
 

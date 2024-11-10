@@ -42,10 +42,10 @@ public:
     void LoadSer();
     //new
     string Load(const string& fileName);
+    string Save(const string& fileName);
     vector<unordered_map<string, string>> GetAnimals();
     //
     bool IsAnimalsEmpty();
-    bool IsReptilesEmpty();
     void Clear();
 };
 

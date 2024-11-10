@@ -42,7 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         SubFunc.h SubFunc.cpp
         IgoninForest.h IgoninForest.cpp
         IgoninReptile.h IgoninReptile.cpp
-        filedialog.h filedialog.cpp filedialog.ui
+
 
 
 

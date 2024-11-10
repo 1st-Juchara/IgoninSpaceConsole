@@ -6,6 +6,8 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QGridLayout>
+#include <QFileDialog>
+#include <QMessageBox>
 #include "filedialog.h"
 #include "IgoninForest.h"
 using namespace std;
@@ -23,14 +25,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void PaintEvent(QPaintEvent* m);
+    //void PaintEvent(QPaintEvent* m);
     IgoninForest forest;
 
 private:
     Ui::MainWindow *ui;
     void paintEvent(QPaintEvent*);
     QGridLayout* myLayout;
-    FileDialog d;
     //NEW! draw table
     struct TableParams{
         int rows = 0;
@@ -42,25 +43,26 @@ private:
     vector<unordered_map<string, string>> table;
     TableParams tableParams;
 
-    pair<int, int> startPos = {0, 30};
     int mergeWidth = 20;
     int mergeHeight = 10;
     int scrollBarSize = 20;
-    int upperMerge = 2;
+    int upperMerge = 50;
+    pair<int, int> startPos = {mergeWidth, upperMerge};
 
     void getTableSize(QPainter& painter);
-    pair<int, int> viewTableSize();
     void setScrolls();
     void paintTable(QPainter& painter);
+    void clearTable();
     //
 
 private slots:
 
     void on_ButtonMenuFile_triggered();
 
-    void on_ButtonMenuForest_triggered();
     void resizeEvent(QResizeEvent* event);
     void on_verticalScrollBar_valueChanged(int value);
     void on_horizontalScrollBar_valueChanged(int value);
+    void on_ButtonMenuSave_triggered();
+    void on_ButtonMenuClear_triggered();
 };
 #endif // MAINWINDOW_H

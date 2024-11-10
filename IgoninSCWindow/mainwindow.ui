@@ -55,19 +55,25 @@
      <string>Меню</string>
     </property>
     <addaction name="ButtonMenuFile"/>
-    <addaction name="ButtonMenuForest"/>
+    <addaction name="ButtonMenuSave"/>
+    <addaction name="ButtonMenuClear"/>
    </widget>
    <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="ButtonMenuFile">
    <property name="text">
-    <string>Файл</string>
+    <string>Загрузить</string>
    </property>
   </action>
-  <action name="ButtonMenuForest">
+  <action name="ButtonMenuSave">
    <property name="text">
-    <string>Лес</string>
+    <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="ButtonMenuClear">
+   <property name="text">
+    <string>Очистить</string>
    </property>
   </action>
  </widget>

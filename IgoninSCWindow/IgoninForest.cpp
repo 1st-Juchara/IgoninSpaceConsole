@@ -154,6 +154,7 @@ void IgoninForest::LoadSer()
 
 string IgoninForest::Load(const string &fileName)
 {
+    string message;
     if (!fileName.empty())
     {
         //
@@ -168,13 +169,37 @@ string IgoninForest::Load(const string &fileName)
             }
             catch (const exception& e)
             {
-                return "Ошибка: файл поврежден";
+                message = "Ошибка: файл поврежден";
                 Clear();
             }
             fin.close();
         }
     }
-    return "Успешно загружено!";
+    return message;
+}
+
+string IgoninForest::Save(const string &fileName)
+{
+    string message;
+    if (!fileName.empty())
+    {
+        ofstream fout(fileName);
+        if (fout)
+        {
+            boost::archive::text_oarchive oa(fout);
+
+            oa << animals;
+
+            fout.close();
+        }
+        else
+            message = "Ошибка: сохранение не удалось";
+        //oa << reptiles.size();
+        //for (auto reptile : reptiles) {
+        //	oa << reptile;
+        //}
+    }
+    return message;
 }
 
 vector<unordered_map<string, string>> IgoninForest::GetAnimals()
@@ -197,7 +222,6 @@ vector<unordered_map<string, string>> IgoninForest::GetAnimals()
 bool IgoninForest::IsAnimalsEmpty()
 {
     if (animals.empty()) {
-        cout << "Список животных пуст\n\n";
         return true;
     }
     else
