@@ -94,8 +94,9 @@ void MainWindow::setScrolls()
 {
     int winHeight = this->height();
     int winWidth = this->width();
-    ui->horizontalScrollBar->setGeometry(0, winHeight - 42 - scrollBarSize, winWidth - scrollBarSize, scrollBarSize);
+    ui->horizontalScrollBar->setGeometry(0, winHeight - scrollBarSize*2, winWidth - scrollBarSize, scrollBarSize);
     ui->verticalScrollBar->setGeometry(winWidth - scrollBarSize, 0, scrollBarSize, winHeight - scrollBarSize*2);
+    ui->pushButton->setGeometry(winWidth - scrollBarSize, winHeight - scrollBarSize*2, scrollBarSize, scrollBarSize);
 
     int width = scrollBarSize;
     for (pair<string, int> columnWidth : tableParams.columnWidths){
@@ -108,22 +109,26 @@ void MainWindow::setScrolls()
     if (width - winWidth + mergeWidth <= 0) {
         ui->horizontalScrollBar->setDisabled(true);
         ui->horizontalScrollBar->setVisible(false);
+        ui->pushButton->setVisible(false);
     }
     else {
         ui->horizontalScrollBar->setDisabled(false);
         ui->horizontalScrollBar->setVisible(true);
-        ui->horizontalScrollBar->setMaximum(width - winWidth + mergeWidth);
+        ui->pushButton->setVisible(true);
+        ui->horizontalScrollBar->setMaximum(int(sqrt(width - winWidth + mergeWidth)) + 1);
         ui->horizontalScrollBar->setMinimum(0);
         startPos.first = ui->horizontalScrollBar->value() + mergeWidth;
     }
     if (height - winHeight + scrollBarSize <= 0) {
         ui->verticalScrollBar->setDisabled(true);
         ui->verticalScrollBar->setVisible(false);
+        ui->pushButton->setVisible(false);
     }
     else {
         ui->verticalScrollBar->setDisabled(false);
         ui->verticalScrollBar->setVisible(true);
-        ui->verticalScrollBar->setMaximum((height - winHeight + scrollBarSize) / tableParams.rowHeight);
+        ui->pushButton->setVisible(true);
+        ui->verticalScrollBar->setMaximum((height - winHeight + scrollBarSize) / tableParams.rowHeight + 1);
         ui->verticalScrollBar->setMinimum(0);
         startPos.second = ui->verticalScrollBar->value() + upperMerge;
     }
@@ -214,7 +219,7 @@ void MainWindow::on_verticalScrollBar_valueChanged(int value)
 
 void MainWindow::on_horizontalScrollBar_valueChanged(int value)
 {
-    startPos.first = -value  + mergeWidth;
+    startPos.first = -value*value  + mergeWidth;
     repaint();
 }
 
@@ -250,5 +255,15 @@ void MainWindow::on_ButtonMenuClear_triggered()
 {
     clearTable();
     repaint();
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+
+    ui->verticalScrollBar->setValue(ui->verticalScrollBar->maximum() / 2);
+    ui->horizontalScrollBar->setValue(ui->horizontalScrollBar->maximum() / 2);
+    repaint();
+
 }
 

@@ -15,8 +15,8 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollBar>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,15 +30,16 @@ public:
     QWidget *centralwidget;
     QScrollBar *horizontalScrollBar;
     QScrollBar *verticalScrollBar;
+    QPushButton *pushButton;
     QMenuBar *menubar;
     QMenu *menu;
-    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(800, 600);
+        MainWindow->setEnabled(true);
+        MainWindow->resize(800, 598);
         ButtonMenuFile = new QAction(MainWindow);
         ButtonMenuFile->setObjectName("ButtonMenuFile");
         ButtonMenuSave = new QAction(MainWindow);
@@ -55,6 +56,9 @@ public:
         verticalScrollBar->setObjectName("verticalScrollBar");
         verticalScrollBar->setGeometry(QRect(360, 380, 16, 160));
         verticalScrollBar->setOrientation(Qt::Orientation::Vertical);
+        pushButton = new QPushButton(centralwidget);
+        pushButton->setObjectName("pushButton");
+        pushButton->setGeometry(QRect(580, 430, 83, 29));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -62,9 +66,6 @@ public:
         menu = new QMenu(menubar);
         menu->setObjectName("menu");
         MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName("statusbar");
-        MainWindow->setStatusBar(statusbar);
 
         menubar->addAction(menu->menuAction());
         menu->addAction(ButtonMenuFile);
@@ -82,6 +83,7 @@ public:
         ButtonMenuFile->setText(QCoreApplication::translate("MainWindow", "\320\227\320\260\320\263\321\200\321\203\320\267\320\270\321\202\321\214", nullptr));
         ButtonMenuSave->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", nullptr));
         ButtonMenuClear->setText(QCoreApplication::translate("MainWindow", "\320\236\321\207\320\270\321\201\321\202\320\270\321\202\321\214", nullptr));
+        pushButton->setText(QString());
         menu->setTitle(QCoreApplication::translate("MainWindow", "\320\234\320\265\320\275\321\216", nullptr));
     } // retranslateUi
 

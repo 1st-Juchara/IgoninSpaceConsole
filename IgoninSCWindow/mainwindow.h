@@ -64,5 +64,6 @@ private slots:
     void on_horizontalScrollBar_valueChanged(int value);
     void on_ButtonMenuSave_triggered();
     void on_ButtonMenuClear_triggered();
+    void on_pushButton_clicked();
 };
 #endif // MAINWINDOW_H
