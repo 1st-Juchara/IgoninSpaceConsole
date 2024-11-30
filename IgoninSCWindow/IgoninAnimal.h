@@ -17,9 +17,9 @@ class IgoninAnimal
     HANDLE consoleColor = GetStdHandle(STD_OUTPUT_HANDLE);
 protected:
     virtual std::vector<std::string> setterOptions();
-    static const std::vector<std::string> animalColors;// { "красный", "коричневый", "серый", "черный", "белый" };
+    // { "красный", "коричневый", "серый", "черный", "белый" };
     static const std::vector<int> colorsCodes;// { 12, 6, 8, 48, 15 };
-    static const std::vector<std::string> nutritionTypes;// { "плотоядное", "травоядное", "всеядное" };
+    // { "плотоядное", "травоядное", "всеядное" };
     std::string name;
     int Color;
     int Nutrition;
@@ -34,8 +34,11 @@ public:
         ar& age;
         ar& weight;
     }
+    static const std::vector<std::string> animalColors;
+    static const std::vector<std::string> nutritionTypes;
     virtual std::unordered_map<std::string, std::string> getAnimalData();
     virtual void SetParamsFromConsole();
+    virtual void SetParamsFromMap(std::unordered_map<std::string, std::string>& animalData);
     virtual void Print();
 };
 #endif // IGONINANIMAL

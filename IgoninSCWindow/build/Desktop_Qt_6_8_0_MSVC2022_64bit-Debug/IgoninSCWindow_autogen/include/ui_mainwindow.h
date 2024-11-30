@@ -27,6 +27,7 @@ public:
     QAction *ButtonMenuFile;
     QAction *ButtonMenuSave;
     QAction *ButtonMenuClear;
+    QAction *ButtonManager;
     QWidget *centralwidget;
     QScrollBar *horizontalScrollBar;
     QScrollBar *verticalScrollBar;
@@ -46,6 +47,8 @@ public:
         ButtonMenuSave->setObjectName("ButtonMenuSave");
         ButtonMenuClear = new QAction(MainWindow);
         ButtonMenuClear->setObjectName("ButtonMenuClear");
+        ButtonManager = new QAction(MainWindow);
+        ButtonManager->setObjectName("ButtonManager");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         horizontalScrollBar = new QScrollBar(centralwidget);
@@ -71,6 +74,7 @@ public:
         menu->addAction(ButtonMenuFile);
         menu->addAction(ButtonMenuSave);
         menu->addAction(ButtonMenuClear);
+        menu->addAction(ButtonManager);
 
         retranslateUi(MainWindow);
 
@@ -83,6 +87,7 @@ public:
         ButtonMenuFile->setText(QCoreApplication::translate("MainWindow", "\320\227\320\260\320\263\321\200\321\203\320\267\320\270\321\202\321\214", nullptr));
         ButtonMenuSave->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", nullptr));
         ButtonMenuClear->setText(QCoreApplication::translate("MainWindow", "\320\236\321\207\320\270\321\201\321\202\320\270\321\202\321\214", nullptr));
+        ButtonManager->setText(QCoreApplication::translate("MainWindow", "\320\230\320\267\320\274\320\265\320\275\320\270\321\202\321\214", nullptr));
         pushButton->setText(QString());
         menu->setTitle(QCoreApplication::translate("MainWindow", "\320\234\320\265\320\275\321\216", nullptr));
     } // retranslateUi

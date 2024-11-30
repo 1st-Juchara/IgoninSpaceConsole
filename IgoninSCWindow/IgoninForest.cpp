@@ -209,13 +209,33 @@ vector<unordered_map<string, string>> IgoninForest::GetAnimals()
         animalsData.push_back(unordered_map<string, string>{{"Ошибка", "Лес пуст..."}});
     else
     {
-        for (auto animal : animals)
+        for (int i = 0; i <  animals.size(); i++)
         {
-            unordered_map<string, string> animalData = animal->getAnimalData();
+            unordered_map<string, string> animalData = animals[i]->getAnimalData();
+            animalData.insert({"id" , to_string(i + 1)});
             animalsData.push_back(animalData);
         }
     }
     return animalsData;
+}
+
+void IgoninForest::changeAnimalMap(int inx, unordered_map<string, string> &animalData)
+{
+    animals[inx]->SetParamsFromMap(animalData);
+}
+
+void IgoninForest::addAnimalMap(unordered_map<string, string> &animalData)
+{
+    shared_ptr<IgoninAnimal> animal = make_shared<IgoninAnimal>();
+    animal->SetParamsFromMap(animalData);
+    animals.push_back(animal);
+}
+
+void IgoninForest::addReptileMap(unordered_map<string, string> &animalData)
+{
+    shared_ptr<IgoninReptile> reptile = make_shared<IgoninReptile>();
+    reptile->SetParamsFromMap(animalData);
+    animals.push_back(reptile);
 }
 
 

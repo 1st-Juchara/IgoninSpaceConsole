@@ -76,13 +76,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 86,
+				"line" : 87,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 68,
+				"line" : 69,
 				"parent" : 0
 			},
 			{
@@ -623,18 +623,18 @@
 		},
 		{
 			"backtrace" : 4,
-			"path" : "filedialog.h",
+			"path" : "igonindialog.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 4,
 			"compileGroupIndex" : 0,
-			"path" : "filedialog.cpp",
+			"path" : "igonindialog.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 4,
-			"path" : "filedialog.ui",
+			"path" : "igonindialog.ui",
 			"sourceGroupIndex" : 2
 		},
 		{
@@ -646,7 +646,7 @@
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "build/Desktop_Qt_6_8_0_MSVC2022_64bit-Debug/IgoninSCWindow_autogen/include/ui_filedialog.h",
+			"path" : "build/Desktop_Qt_6_8_0_MSVC2022_64bit-Debug/IgoninSCWindow_autogen/include/ui_igonindialog.h",
 			"sourceGroupIndex" : 1
 		},
 		{

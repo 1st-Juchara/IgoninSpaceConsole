@@ -21,6 +21,13 @@ std::unordered_map<std::string, std::string> IgoninReptile::getAnimalData()
     return animalData;
 }
 
+void IgoninReptile::SetParamsFromMap(std::unordered_map<string, string> &animalData)
+{
+    IgoninAnimal::SetParamsFromMap(animalData);
+    isPoisonous = animalData["Ядовитость"] == PoisonousState.first;
+    tailLength = stoi(animalData["Длина хвоста"]);
+}
+
 void IgoninReptile::SetParamsFromConsole()
 {
     IgoninAnimal::SetParamsFromConsole();

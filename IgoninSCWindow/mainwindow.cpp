@@ -30,7 +30,7 @@ void MainWindow::paintEvent(QPaintEvent *)
 {
     QPainter* painter = new QPainter(this);
 
-    if (tableParams.rows == 0)
+    if ((tableParams.rows == 0) || (tableParams.rows < tableObjects.size()))
     {
         getTableSize(*painter);
     }
@@ -43,19 +43,32 @@ void MainWindow::paintEvent(QPaintEvent *)
 void MainWindow::getTableSize(QPainter& painter)
 {
     int rows = 0; // кол-во строк
-    rows = table.size();
+    rows = tableObjects.size();
     int rowHeight = painter.fontMetrics().height() + mergeHeight;
 
     unordered_map<string, int> widths; // кол-во и размеры столбцов
     vector<string> head;
     int columns = 0;
     int ggg = 0;
-    for (auto tableRow : table)
+    for (auto tableRow : tableObjects)
     {
         for (auto cell : tableRow)
         {
             int headWidth = painter.fontMetrics().horizontalAdvance(QString("").fromStdString(cell.first));
-            int cellWidth = painter.fontMetrics().horizontalAdvance(QString("").fromStdString(cell.second));
+            int cellWidth;
+            if (cell.first == "Цвет")
+            {
+                string color = IgoninAnimal::animalColors[stoi(cell.second)];
+                cellWidth = painter.fontMetrics().horizontalAdvance(QString("").fromStdString(color));
+            }
+            else if (cell.first == "Тип питания")
+            {
+                string nutrition = IgoninAnimal::nutritionTypes[stoi(cell.second)];
+                cellWidth = painter.fontMetrics().horizontalAdvance(QString("").fromStdString(nutrition));
+            }
+            else
+                cellWidth = painter.fontMetrics().horizontalAdvance(QString("").fromStdString(cell.second));
+
             ++columns;
             //debug
             //QString key = QString("").fromStdString(cell.first);
@@ -63,7 +76,7 @@ void MainWindow::getTableSize(QPainter& painter)
             //
             bool newHead = true;
             for (string columnHead : head)
-                if (columnHead.find(cell.first) != string::npos)
+                if ((columnHead.find(cell.first) != string::npos) || ("id" == cell.first))
                 {
                     newHead = false;
                     break;
@@ -149,15 +162,25 @@ void MainWindow::paintTable(QPainter& painter)
         painter.drawLine(pos.first + tableParams.columnWidths[tableParams.head[inx]] - mergeWidth / 2, pos.second,
                          pos.first + tableParams.columnWidths[tableParams.head[inx]] - mergeWidth / 2, pos.second + tableParams.rowHeight*tableParams.rows);
 
-        for (auto row : table)
+        for (auto row : tableObjects)
         {
             pos.second += tableParams.rowHeight;
             if (row.find(tableParams.head[inx]) != row.end())
             {
                 QString cell;
-                if (tableParams.head[inx].compare("Имя") == 0)
+                if (tableParams.head[inx] == "Имя")
                     cell = QString("").fromLocal8Bit(row[tableParams.head[inx]].c_str());
-                else
+                else if (tableParams.head[inx] == "Цвет")
+                {
+                    string color = IgoninAnimal::animalColors[stoi(row[tableParams.head[inx]])];
+                    cell = QString("").fromStdString(color.c_str());
+                }
+                else if (tableParams.head[inx] == "Тип питания")
+                {
+                    string nutrition = IgoninAnimal::nutritionTypes[stoi(row[tableParams.head[inx]])];
+                    cell = QString("").fromStdString(nutrition.c_str());
+                }
+                else if (!(tableParams.head[inx].compare("id") == 0))
                     cell = QString("").fromStdString(row[tableParams.head[inx]].c_str());
                 drawCell(pos.first, pos.second, cell);
             }
@@ -174,9 +197,15 @@ void MainWindow::paintTable(QPainter& painter)
 
 void MainWindow::clearTable()
 {
-    table.clear();
+    tableObjects.clear();
     forest.Clear();
     tableParams = TableParams();
+}
+
+void MainWindow::updateTable()
+{
+    tableObjects = forest.GetAnimals();
+    repaint();
 }
 
 void MainWindow::on_ButtonMenuFile_triggered()
@@ -187,19 +216,17 @@ void MainWindow::on_ButtonMenuFile_triggered()
     }
 
     string convertedFilename = filename.toStdString();
-
     string message = forest.Load(convertedFilename);
+
     if (message.empty())
     {
-        table = forest.GetAnimals();
         QMessageBox::information(nullptr, "Успех", "Загрузка удалась");
+        updateTable();
     }
     else
     {
         QMessageBox::information(nullptr, "Ошибка", QString("").fromStdString(message));
     }
-
-    repaint();
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -264,6 +291,14 @@ void MainWindow::on_pushButton_clicked()
     ui->verticalScrollBar->setValue(ui->verticalScrollBar->maximum() / 2);
     ui->horizontalScrollBar->setValue(ui->horizontalScrollBar->maximum() / 2);
     repaint();
+}
 
+
+void MainWindow::on_ButtonManager_triggered()
+{
+    connect(&d, SIGNAL(&IgoninDialog::requestRepaint), this, SLOT(&MainWindow::updateTable));
+    d.inputTable(tableObjects);
+    d.inputForest(forest);
+    d.show();
 }
 

@@ -42,6 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         SubFunc.h SubFunc.cpp
         IgoninForest.h IgoninForest.cpp
         IgoninReptile.h IgoninReptile.cpp
+        igonindialog.h igonindialog.cpp igonindialog.ui
 
 
 

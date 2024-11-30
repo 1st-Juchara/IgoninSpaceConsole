@@ -44,6 +44,9 @@ public:
     string Load(const string& fileName);
     string Save(const string& fileName);
     vector<unordered_map<string, string>> GetAnimals();
+    void changeAnimalMap(int inx, unordered_map<string, string>& animalData);
+    void addAnimalMap(unordered_map<string, string>& animalData);
+    void addReptileMap(unordered_map<string, string>& animalData);
     //
     bool IsAnimalsEmpty();
     void Clear();

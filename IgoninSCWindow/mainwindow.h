@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include "filedialog.h"
 #include "IgoninForest.h"
+#include "igonindialog.h"
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -27,10 +28,10 @@ public:
     ~MainWindow();
     //void PaintEvent(QPaintEvent* m);
     IgoninForest forest;
+    void paintEvent(QPaintEvent*);
 
 private:
     Ui::MainWindow *ui;
-    void paintEvent(QPaintEvent*);
     QGridLayout* myLayout;
     //NEW! draw table
     struct TableParams{
@@ -40,8 +41,9 @@ private:
         vector<string> head;
     };
 
-    vector<unordered_map<string, string>> table;
+    IgoninDialog d;
     TableParams tableParams;
+    vector<unordered_map<string, string>> tableObjects;
 
     int mergeWidth = 20;
     int mergeHeight = 10;
@@ -53,17 +55,18 @@ private:
     void setScrolls();
     void paintTable(QPainter& painter);
     void clearTable();
+    void updateTable();
     //
 
 private slots:
 
     void on_ButtonMenuFile_triggered();
-
     void resizeEvent(QResizeEvent* event);
     void on_verticalScrollBar_valueChanged(int value);
     void on_horizontalScrollBar_valueChanged(int value);
     void on_ButtonMenuSave_triggered();
     void on_ButtonMenuClear_triggered();
     void on_pushButton_clicked();
+    void on_ButtonManager_triggered();
 };
 #endif // MAINWINDOW_H

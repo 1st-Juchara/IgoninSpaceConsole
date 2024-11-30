@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>IgoninDialog</class>
+ <widget class="QDialog" name="IgoninDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QListWidget" name="listWidgetAnimal">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>271</width>
+     <height>431</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEditName">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>10</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEditAge">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>160</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEditWeight">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>210</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEditTail">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>310</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>10</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Impact</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>Имя:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>60</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Impact</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>Цвет:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>110</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Impact</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>Тип питания:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>160</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Impact</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>Возраст:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>210</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Impact</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>Вес:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>260</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Impact</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>Ядовитость:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>310</y>
+     <width>120</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Impact</family>
+    </font>
+   </property>
+   <property name="text">
+    <string>Длина хвоста:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonAddAnimal">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>390</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Добавить</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonChangeAnimal">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>390</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Изменить</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonDeleteAnimal">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>390</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Удалить</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonCloseDialog">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>440</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Назад</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="listBoxColor">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>60</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="listBoxNutrition">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>110</y>
+     <width>150</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBoxPoisonous">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>260</y>
+     <width>131</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ядовитость</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonComplete">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>350</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

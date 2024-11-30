@@ -73,6 +73,7 @@
     <addaction name="ButtonMenuFile"/>
     <addaction name="ButtonMenuSave"/>
     <addaction name="ButtonMenuClear"/>
+    <addaction name="ButtonManager"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -89,6 +90,11 @@
   <action name="ButtonMenuClear">
    <property name="text">
     <string>Очистить</string>
+   </property>
+  </action>
+  <action name="ButtonManager">
+   <property name="text">
+    <string>Изменить</string>
    </property>
   </action>
  </widget>

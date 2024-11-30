@@ -11,10 +11,10 @@ unordered_map<string, string> IgoninAnimal::getAnimalData()
 {
     unordered_map<string, string> animalData;
     animalData.insert({"Имя", name});
-    animalData.insert({"Тип питания", nutritionTypes[Nutrition]});
+    animalData.insert({"Тип питания", to_string(Nutrition)});
     animalData.insert({"Возраст", to_string(age)});
     animalData.insert({"Вес", to_string(weight)});
-    animalData.insert({"Цвет", animalColors[Color]});
+    animalData.insert({"Цвет", to_string(Color)});
     return animalData;
 }
 const std::vector<std::string> IgoninAnimal::animalColors = { "красный", "коричневый", "серый", "черный", "белый", "зеленый", "желтый" };
@@ -29,6 +29,15 @@ void IgoninAnimal::SetParamsFromConsole()
     SetNumAttribute(age, 0, 200, setterOptions()[3]);
     SetNumAttribute(weight, 0, 20000, setterOptions()[4]);
     SetEnumAttribute(animalColors, Color, setterOptions()[5]);
+}
+
+void IgoninAnimal::SetParamsFromMap(std::unordered_map<string, string> &animalData)
+{
+    SetStringAttribute(name, animalData["Имя"]);
+    Nutrition = stoi(animalData["Тип питания"]);
+    age = stoi(animalData["Возраст"]);
+    weight = stoi(animalData["Вес"]);
+    Color = stoi(animalData["Цвет"]);
 }
 
 

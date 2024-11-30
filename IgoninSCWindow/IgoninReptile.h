@@ -22,6 +22,7 @@ public:
         ar& tailLength;
     }
     std::unordered_map<std::string, std::string> getAnimalData();
+    void SetParamsFromMap(std::unordered_map<std::string, std::string>& animalData);
     void SetParamsFromConsole();
     void Print();
 };
