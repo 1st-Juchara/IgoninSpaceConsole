@@ -33,7 +33,7 @@ void IgoninAnimal::SetParamsFromConsole()
 
 void IgoninAnimal::SetParamsFromMap(std::unordered_map<string, string> &animalData)
 {
-    SetStringAttribute(name, animalData["Имя"]);
+    name = animalData["Имя"];
     Nutrition = stoi(animalData["Тип питания"]);
     age = stoi(animalData["Возраст"]);
     weight = stoi(animalData["Вес"]);

@@ -23,6 +23,9 @@ public:
     ~IgoninDialog();
     void closeEvent(QCloseEvent *) override {
         emit requestRepaint();  // Отправляем сигнал о необходимости перерисовки
+        clearFields();
+        toViewMode();
+        inx = -1;
     }
 
 signals:
@@ -37,7 +40,19 @@ private slots:
 
     void on_buttonComplete_clicked();
 
+    void on_buttonHaram_clicked();
+
+    void on_buttonCloseDialog_clicked();
+
+    void on_buttonDeleteAnimal_clicked();
+
 private:
+
+    enum objectTypes {
+        animal = 0,
+        reptile = 1
+    };
+
     void viewObjectAttributes();
     std::vector<std::unordered_map<std::string, std::string>>* table;
     IgoninForest* forest;
@@ -46,12 +61,21 @@ private:
 
     bool checkFields();
 
-    void GetFields();
+    unordered_map<string, string> GetFields();
 
     void updateTable();
 
-    void clearFields(std::string);
+    void clearFields();
 
+    void setObjType(objectTypes objType);
+
+    void setFieldsDisabled(bool disabledState);
+
+    void toViewMode();
+
+    void toAddMode();
+
+    void toChangeMode();
 
 };
 

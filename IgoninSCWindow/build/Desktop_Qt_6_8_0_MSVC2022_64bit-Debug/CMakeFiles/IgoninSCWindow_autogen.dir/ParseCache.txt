@@ -584,7 +584,6 @@ D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/IgoninAnimal.h
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/IgoninForest.h
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/IgoninReptile.h
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/SubFunc.h
-D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/IgoninForest.cpp
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/filedialog.h
  mmc:Q_OBJECT
  mdp:D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/QList
@@ -1183,6 +1182,7 @@ D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/filedialog.h
  mdp:D:/U4oba/3_Semak/OOP/boost_1_86_0/boost/type_traits/type_with_alignment.hpp
  mdp:D:/U4oba/3_Semak/OOP/boost_1_86_0/boost/utility/enable_if.hpp
  mdp:D:/U4oba/3_Semak/OOP/boost_1_86_0/boost/version.hpp
+D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/IgoninForest.cpp
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/mainwindow.h
  mmc:Q_OBJECT
  mdp:D:/Qt_____/6.8.0/msvc2022_64/include/QtCore/QList
@@ -1817,9 +1817,9 @@ D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/mainwindow.h
  mdp:D:/U4oba/3_Semak/OOP/boost_1_86_0/boost/type_traits/type_with_alignment.hpp
  mdp:D:/U4oba/3_Semak/OOP/boost_1_86_0/boost/utility/enable_if.hpp
  mdp:D:/U4oba/3_Semak/OOP/boost_1_86_0/boost/version.hpp
+D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/IgoninAnimal.cpp
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/igonindialog.cpp
  uic:ui_igonindialog.h
-D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/IgoninAnimal.cpp
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/IgoninReptile.cpp
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/SubFunc.cpp
 D:/U4oba/3_Semak/OOP/IgoninSpaceConsole/IgoninSCWindow/filedialog.cpp

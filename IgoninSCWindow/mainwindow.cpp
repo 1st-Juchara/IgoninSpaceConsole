@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
     //        table[i].insert({to_string(j*10), to_string((i + j*10) * 5)});
     //    }
     //}
+    ui->horizontalScrollBar->setVisible(false);
+    ui->verticalScrollBar->setVisible(false);
+    ui->pushButton->setVisible(false);
 }
 
 MainWindow::~MainWindow()
@@ -30,8 +33,9 @@ void MainWindow::paintEvent(QPaintEvent *)
 {
     QPainter* painter = new QPainter(this);
 
-    if ((tableParams.rows == 0) || (tableParams.rows < tableObjects.size()))
+    if (updateTableRequest)
     {
+        updateTableRequest = false;
         getTableSize(*painter);
     }
 
@@ -204,7 +208,7 @@ void MainWindow::clearTable()
 
 void MainWindow::updateTable()
 {
-    tableObjects = forest.GetAnimals();
+    updateTableRequest = true;
     repaint();
 }
 
@@ -221,6 +225,7 @@ void MainWindow::on_ButtonMenuFile_triggered()
     if (message.empty())
     {
         QMessageBox::information(nullptr, "Успех", "Загрузка удалась");
+        tableObjects = forest.GetAnimals();
         updateTable();
     }
     else
@@ -277,13 +282,11 @@ void MainWindow::on_ButtonMenuSave_triggered()
     }
 }
 
-
 void MainWindow::on_ButtonMenuClear_triggered()
 {
     clearTable();
-    repaint();
+    updateTable();
 }
-
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -293,10 +296,9 @@ void MainWindow::on_pushButton_clicked()
     repaint();
 }
 
-
 void MainWindow::on_ButtonManager_triggered()
 {
-    connect(&d, SIGNAL(&IgoninDialog::requestRepaint), this, SLOT(&MainWindow::updateTable));
+    connect(&d, &IgoninDialog::requestRepaint, this, [=]() { this->updateTable(); });
     d.inputTable(tableObjects);
     d.inputForest(forest);
     d.show();

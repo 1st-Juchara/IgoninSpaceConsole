@@ -29,6 +29,7 @@ public:
     //void PaintEvent(QPaintEvent* m);
     IgoninForest forest;
     void paintEvent(QPaintEvent*);
+    void updateTable();
 
 private:
     Ui::MainWindow *ui;
@@ -49,13 +50,13 @@ private:
     int mergeHeight = 10;
     int scrollBarSize = 20;
     int upperMerge = 50;
+    bool updateTableRequest = false;
     pair<int, int> startPos = {mergeWidth, upperMerge};
 
     void getTableSize(QPainter& painter);
     void setScrolls();
     void paintTable(QPainter& painter);
     void clearTable();
-    void updateTable();
     //
 
 private slots:

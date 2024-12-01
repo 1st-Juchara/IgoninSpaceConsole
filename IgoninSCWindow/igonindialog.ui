@@ -283,6 +283,19 @@
   <widget class="QPushButton" name="buttonComplete">
    <property name="geometry">
     <rect>
+     <x>420</x>
+     <y>350</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Готово</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonHaram">
+   <property name="geometry">
+    <rect>
      <x>530</x>
      <y>350</y>
      <width>80</width>
@@ -290,7 +303,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Отмена</string>
    </property>
   </widget>
  </widget>

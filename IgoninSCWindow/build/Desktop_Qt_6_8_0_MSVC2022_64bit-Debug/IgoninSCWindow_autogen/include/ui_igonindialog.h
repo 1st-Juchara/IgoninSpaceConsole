@@ -44,6 +44,7 @@ public:
     QComboBox *listBoxNutrition;
     QCheckBox *checkBoxPoisonous;
     QPushButton *buttonComplete;
+    QPushButton *buttonHaram;
 
     void setupUi(QDialog *IgoninDialog)
     {
@@ -119,7 +120,10 @@ public:
         checkBoxPoisonous->setGeometry(QRect(470, 260, 131, 30));
         buttonComplete = new QPushButton(IgoninDialog);
         buttonComplete->setObjectName("buttonComplete");
-        buttonComplete->setGeometry(QRect(530, 350, 80, 30));
+        buttonComplete->setGeometry(QRect(420, 350, 80, 30));
+        buttonHaram = new QPushButton(IgoninDialog);
+        buttonHaram->setObjectName("buttonHaram");
+        buttonHaram->setGeometry(QRect(530, 350, 80, 30));
 
         retranslateUi(IgoninDialog);
 
@@ -141,7 +145,8 @@ public:
         buttonDeleteAnimal->setText(QCoreApplication::translate("IgoninDialog", "\320\243\320\264\320\260\320\273\320\270\321\202\321\214", nullptr));
         buttonCloseDialog->setText(QCoreApplication::translate("IgoninDialog", "\320\235\320\260\320\267\320\260\320\264", nullptr));
         checkBoxPoisonous->setText(QCoreApplication::translate("IgoninDialog", "\320\257\320\264\320\276\320\262\320\270\321\202\320\276\321\201\321\202\321\214", nullptr));
-        buttonComplete->setText(QCoreApplication::translate("IgoninDialog", "PushButton", nullptr));
+        buttonComplete->setText(QCoreApplication::translate("IgoninDialog", "\320\223\320\276\321\202\320\276\320\262\320\276", nullptr));
+        buttonHaram->setText(QCoreApplication::translate("IgoninDialog", "\320\236\321\202\320\274\320\265\320\275\320\260", nullptr));
     } // retranslateUi
 
 };

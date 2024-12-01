@@ -18,8 +18,7 @@ IgoninDialog::IgoninDialog(QWidget *parent)
     for (string nutrition : IgoninAnimal::nutritionTypes)
         ui->listBoxNutrition->addItem(QString::fromStdString(nutrition));
 
-    ui->buttonComplete->setVisible(false);
-    ui->buttonComplete->setDisabled(true);
+    toViewMode();
 }
 
 void IgoninDialog::inputTable(vector<unordered_map<string, string>>& table)
@@ -50,7 +49,12 @@ void IgoninDialog::viewObjectAttributes()
 {
     if (inx >= 0)
     {
-        ui->textEditName->setPlainText(QString::fromLocal8Bit((*table)[inx]["Имя"]));
+        if (!((*table)[inx].find("Ядовитость") == (*table)[inx].end()))
+            setObjType(objectTypes::reptile);
+        else
+            setObjType(objectTypes::animal);
+
+        ui->textEditName->setPlainText(QString::fromLocal8Bit((*table)[inx]["Имя"].c_str()));
         ui->textEditAge->setPlainText(QString::fromLocal8Bit((*table)[inx]["Возраст"]));
         ui->textEditWeight->setPlainText(QString::fromLocal8Bit((*table)[inx]["Вес"]));
 
@@ -61,56 +65,17 @@ void IgoninDialog::viewObjectAttributes()
 
         if (!((*table)[inx].find("Ядовитость") == (*table)[inx].end()))
         {
-            ui->label_6->setVisible(true);
-            ui->checkBoxPoisonous->setDisabled(false);
-            ui->checkBoxPoisonous->setVisible(true);
             ui->checkBoxPoisonous->setCheckState(Qt::CheckState((*table)[inx]["Ядовитость"] == "ядовито"));
-            ui->label_7->setVisible(true);
-            ui->textEditTail->setDisabled(false);
-            ui->textEditTail->setVisible(true);
             ui->textEditTail->setPlainText(QString::fromLocal8Bit((*table)[inx]["Длина хвоста"]));
-        }
-        else
-        {
-            ui->label_6->setVisible(false);
-            ui->checkBoxPoisonous->setDisabled(true);
-            ui->checkBoxPoisonous->setVisible(false);
-            ui->label_7->setVisible(false);
-            ui->textEditTail->setDisabled(true);
-            ui->textEditTail->setVisible(false);
-
         }
     }
 }
-
 
 void IgoninDialog::on_buttonChangeAnimal_clicked()
 {
     if (inx >= 0)
     {
-        (*table)[inx]["Имя"] = ui->textEditName->toPlainText().toLocal8Bit();
-        (*table)[inx]["Возраст"] = ui->textEditAge->toPlainText().toStdString();
-        (*table)[inx]["Вес"] = ui->textEditWeight->toPlainText().toStdString();
-
-        if (ui->listBoxColor->currentIndex() > 0)
-            (*table)[inx]["Цвет"] = to_string(ui->listBoxColor->currentIndex() - 1);
-
-        if (ui->listBoxNutrition->currentIndex() > 0)
-            (*table)[inx]["Тип питания"] = to_string(ui->listBoxNutrition->currentIndex() - 1);
-
-
-        if (!((*table)[inx].find("Ядовитость") == (*table)[inx].end()))
-        {
-            if (ui->checkBoxPoisonous->checkState())
-                (*table)[inx]["Ядовитость"] = "ядовито";
-            else
-                (*table)[inx]["Ядовитость"] = "не ядовито";
-
-            (*table)[inx]["Длина хвоста"] = ui->textEditTail->toPlainText().toStdString();
-        }
-
-        if (inx > ui->listWidgetAnimal->count() - 1)
-        forest->changeAnimalMap(inx, (*table)[inx]);
+        toChangeMode();
         updateTable();
     }
 }
@@ -122,12 +87,17 @@ void IgoninDialog::updateTable()
     ui->listWidgetAnimal->blockSignals(oldState);
     for (auto row : *this->table)
     {
-        QString rowText = QString::fromStdString(row["id"] + ")").leftJustified(10, ' ')  + QString::fromLocal8Bit(row["Имя"]);
+        QString rowText = QString::fromStdString(row["id"] + ")").leftJustified(10, ' ')  + QString::fromLocal8Bit(row["Имя"].c_str());
         ui->listWidgetAnimal->addItem(rowText);
+    }
+    if (inx >= 1)
+    {
+        ui->listWidgetAnimal->setCurrentRow(inx);
+        viewObjectAttributes();
     }
 }
 
-void IgoninDialog::clearFields(string newObj)
+void IgoninDialog::clearFields()
 {
     ui->textEditName->setPlainText("");
     ui->textEditAge->setPlainText("");
@@ -136,47 +106,89 @@ void IgoninDialog::clearFields(string newObj)
     ui->listBoxColor->setCurrentText("");
     ui->listBoxNutrition->setCurrentText("");
 
-    if (newObj == "reptile")
+    ui->checkBoxPoisonous->setCheckState(Qt::CheckState(false));
+    ui->textEditTail->setPlainText("");
+
+}
+
+void IgoninDialog::setObjType(objectTypes objType)
+{
+    if (objType == objectTypes::animal)
     {
-        ui->label_6->setVisible(true);
-        ui->checkBoxPoisonous->setDisabled(false);
-        ui->checkBoxPoisonous->setVisible(true);
-        ui->checkBoxPoisonous->setCheckState(Qt::CheckState(false));
-        ui->label_7->setVisible(true);
-        ui->textEditTail->setDisabled(false);
-        ui->textEditTail->setVisible(true);
-        ui->textEditTail->setPlainText("");
+        ui->label_6->setVisible(false);
+        ui->checkBoxPoisonous->setVisible(false);
+        ui->label_7->setVisible(false);
+        ui->textEditTail->setVisible(false);
     }
     else
     {
-        ui->label_6->setVisible(false);
-        ui->checkBoxPoisonous->setDisabled(true);
-        ui->checkBoxPoisonous->setVisible(false);
-        ui->label_7->setVisible(false);
-        ui->textEditTail->setDisabled(true);
-        ui->textEditTail->setVisible(false);
-
+        ui->label_6->setVisible(true);
+        ui->checkBoxPoisonous->setVisible(true);
+        ui->label_7->setVisible(true);
+        ui->textEditTail->setVisible(true);
     }
+}
 
+void IgoninDialog::setFieldsDisabled(bool disabledState)
+{
+    ui->textEditName->setDisabled(disabledState);
+    ui->textEditAge->setDisabled(disabledState);
+    ui->textEditWeight->setDisabled(disabledState);
+    ui->listBoxColor->setDisabled(disabledState);
+    ui->listBoxNutrition->setDisabled(disabledState);
 
+    ui->checkBoxPoisonous->setDisabled(disabledState);
+    ui->textEditTail->setDisabled(disabledState);
+}
+
+void IgoninDialog::toViewMode()
+{
+    setFieldsDisabled(true);
+    ui->listWidgetAnimal->setDisabled(false);
+    ui->buttonComplete->setVisible(false);
+    ui->buttonHaram->setVisible(false);
+}
+
+void IgoninDialog::toAddMode()
+{
+    clearFields();
+    setFieldsDisabled(false);
+    ui->buttonComplete->setVisible(true);
+    ui->buttonHaram->setVisible(true);
+    ui->listWidgetAnimal->setDisabled(true);
+}
+
+void IgoninDialog::toChangeMode()
+{
+    setFieldsDisabled(false);
+    ui->buttonComplete->setVisible(true);
+    ui->buttonHaram->setVisible(true);
+    ui->listWidgetAnimal->setDisabled(false);
 }
 
 
 void IgoninDialog::on_buttonAddAnimal_clicked()
 {
-    string newObj = "reptile";
+    //TODO: Close dialog - do not clear fields and show complete button
     QMessageBox msgBox;
     msgBox.setText("Кого добавить?");
     msgBox.addButton("Рептилию", QMessageBox::NoRole);
     msgBox.addButton("Животное", QMessageBox::YesRole);
     auto reply = msgBox.exec();
     if (reply == 3)
-        newObj = "animal";
-
-    clearFields(newObj);
-
-    ui->buttonComplete->setVisible(true);
-    ui->buttonComplete->setDisabled(false);
+    {
+        toAddMode();
+        setObjType(objectTypes::animal);
+    }
+    else if (reply == 2)
+    {
+        toAddMode();
+        setObjType(objectTypes::reptile);
+    }
+    else
+    {
+        toAddMode();
+    }
 
 }
 
@@ -186,11 +198,25 @@ void IgoninDialog::on_buttonComplete_clicked()
     bool allRight = checkFields();
     if (allRight)
     {
-        GetFields();
-    }
+        unordered_map<string, string> newTableObj = GetFields();
 
+        if (!ui->listWidgetAnimal->isEnabled())
+        {
+            table->push_back(newTableObj);
+            if (ui->label_6->isVisible())
+                forest->addReptileMap(newTableObj);
+            else
+                forest->addAnimalMap(newTableObj);
+            inx = table->size() - 1;
+        }
+        else
+        {
+            for (auto rowPair : newTableObj)
+                (*table)[inx][rowPair.first] = rowPair.second;
+        }
+        toChangeMode();
+    }
     updateTable();
-        // add animal
 }
 
 bool IgoninDialog::checkFields()
@@ -205,6 +231,7 @@ bool IgoninDialog::checkFields()
     {
         QMessageBox message;
         message.setWindowTitle("ERROR");
+        message.addButton("Ок", QMessageBox::NoRole);
         message.setText("Введите корректные числа!");
         message.show();
         return false;
@@ -214,6 +241,7 @@ bool IgoninDialog::checkFields()
     {
         QMessageBox message;
         message.setWindowTitle("ERROR");
+        message.addButton("Ок", QMessageBox::NoRole);
         message.setText("Выберите цвет!");
         message.show();
         return false;
@@ -223,6 +251,7 @@ bool IgoninDialog::checkFields()
     {
         QMessageBox message;
         message.setWindowTitle("ERROR");
+        message.addButton("Ок", QMessageBox::NoRole);
         message.setText("Выберите тип питания!");
         message.show();
         return false;
@@ -231,11 +260,11 @@ bool IgoninDialog::checkFields()
     return true;
 }
 
-void IgoninDialog::GetFields()
+unordered_map<string, string> IgoninDialog::GetFields()
 {
     unordered_map<string, string> newTableObj;
 
-    newTableObj.insert({"Имя", ui->textEditName->toPlainText().toStdString()});
+    newTableObj.insert({"Имя", ui->textEditName->toPlainText().toLocal8Bit().toStdString()});
     newTableObj.insert({"Возраст", ui->textEditAge->toPlainText().toStdString()});
     newTableObj.insert({"Вес", ui->textEditWeight->toPlainText().toStdString()});
 
@@ -255,10 +284,42 @@ void IgoninDialog::GetFields()
 
     }
 
-    inx = table->size() - 1;
-    table->push_back(newTableObj);
+    return newTableObj;
+}
 
-    if (ui->label_6->isVisible())
-        forest->addReptileMap((*table)[inx]);
+
+void IgoninDialog::on_buttonHaram_clicked()
+{
+    clearFields();
+    toViewMode();
+    viewObjectAttributes();
+}
+
+
+void IgoninDialog::on_buttonCloseDialog_clicked()
+{
+    close();
+}
+
+
+void IgoninDialog::on_buttonDeleteAnimal_clicked()
+{
+    if (inx >= 0)
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Вы уверены?");
+        msgBox.addButton("Нет", QMessageBox::NoRole);
+        msgBox.addButton("Да", QMessageBox::YesRole);
+        auto reply = msgBox.exec();
+
+        if (reply == 3)
+        {
+            (*table).erase((*table).begin() + inx);
+            forest->deleteAnimal(inx);
+            if (inx >= ui->listWidgetAnimal->count() - 1)
+                inx -= 1;
+            updateTable();
+        }
+    }
 }
 

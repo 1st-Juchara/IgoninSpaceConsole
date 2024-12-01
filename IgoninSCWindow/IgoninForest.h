@@ -47,6 +47,7 @@ public:
     void changeAnimalMap(int inx, unordered_map<string, string>& animalData);
     void addAnimalMap(unordered_map<string, string>& animalData);
     void addReptileMap(unordered_map<string, string>& animalData);
+    void deleteAnimal(int inx);
     //
     bool IsAnimalsEmpty();
     void Clear();

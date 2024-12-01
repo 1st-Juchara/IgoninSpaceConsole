@@ -44,7 +44,10 @@ constexpr auto qt_meta_stringdata_CLASSIgoninDialogENDCLASS = QtMocHelpers::stri
     "previous",
     "on_buttonChangeAnimal_clicked",
     "on_buttonAddAnimal_clicked",
-    "on_buttonComplete_clicked"
+    "on_buttonComplete_clicked",
+    "on_buttonHaram_clicked",
+    "on_buttonCloseDialog_clicked",
+    "on_buttonDeleteAnimal_clicked"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -57,7 +60,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSIgoninDialogENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,19 +68,25 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSIgoninDialogENDCLASS[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   44,    2, 0x06,    1 /* Public */,
+       1,    0,   62,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    2,   45,    2, 0x08,    2 /* Private */,
-       7,    0,   50,    2, 0x08,    5 /* Private */,
-       8,    0,   51,    2, 0x08,    6 /* Private */,
-       9,    0,   52,    2, 0x08,    7 /* Private */,
+       3,    2,   63,    2, 0x08,    2 /* Private */,
+       7,    0,   68,    2, 0x08,    5 /* Private */,
+       8,    0,   69,    2, 0x08,    6 /* Private */,
+       9,    0,   70,    2, 0x08,    7 /* Private */,
+      10,    0,   71,    2, 0x08,    8 /* Private */,
+      11,    0,   72,    2, 0x08,    9 /* Private */,
+      12,    0,   73,    2, 0x08,   10 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 4, 0x80000000 | 4,    5,    6,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -105,6 +114,12 @@ Q_CONSTINIT const QMetaObject IgoninDialog::staticMetaObject = { {
         // method 'on_buttonAddAnimal_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_buttonComplete_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_buttonHaram_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_buttonCloseDialog_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_buttonDeleteAnimal_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -121,6 +136,9 @@ void IgoninDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 2: _t->on_buttonChangeAnimal_clicked(); break;
         case 3: _t->on_buttonAddAnimal_clicked(); break;
         case 4: _t->on_buttonComplete_clicked(); break;
+        case 5: _t->on_buttonHaram_clicked(); break;
+        case 6: _t->on_buttonCloseDialog_clicked(); break;
+        case 7: _t->on_buttonDeleteAnimal_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -154,13 +172,13 @@ int IgoninDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 8;
     }
     return _id;
 }
