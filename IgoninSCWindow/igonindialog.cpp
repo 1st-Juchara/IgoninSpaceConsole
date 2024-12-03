@@ -49,8 +49,12 @@ void IgoninDialog::viewObjectAttributes()
 {
     if (inx >= 0)
     {
-        if (!((*table)[inx].find("Ядовитость") == (*table)[inx].end()))
+        if (!((*table)[inx].find("Ядовитость") == (*table)[inx].end())) // проверка животное это или рептилия
+        {
             setObjType(objectTypes::reptile);
+            ui->checkBoxPoisonous->setCheckState(Qt::CheckState((*table)[inx]["Ядовитость"] == "ядовито"));
+            ui->textEditTail->setPlainText(QString::fromLocal8Bit((*table)[inx]["Длина хвоста"]));
+        }
         else
             setObjType(objectTypes::animal);
 
@@ -62,12 +66,6 @@ void IgoninDialog::viewObjectAttributes()
         ui->listBoxColor->setCurrentText(QString::fromStdString(color));
         string nutrition = IgoninAnimal::nutritionTypes[stoi((*table)[inx]["Тип питания"])];
         ui->listBoxNutrition->setCurrentText(QString::fromStdString(nutrition));
-
-        if (!((*table)[inx].find("Ядовитость") == (*table)[inx].end()))
-        {
-            ui->checkBoxPoisonous->setCheckState(Qt::CheckState((*table)[inx]["Ядовитость"] == "ядовито"));
-            ui->textEditTail->setPlainText(QString::fromLocal8Bit((*table)[inx]["Длина хвоста"]));
-        }
     }
 }
 
@@ -202,6 +200,7 @@ void IgoninDialog::on_buttonComplete_clicked()
 
         if (!ui->listWidgetAnimal->isEnabled())
         {
+            newTableObj.insert({"id", to_string(stoi((*table)[table->size() - 1]["id"]) + 1)});
             table->push_back(newTableObj);
             if (ui->label_6->isVisible())
                 forest->addReptileMap(newTableObj);
@@ -223,17 +222,30 @@ bool IgoninDialog::checkFields()
 {
     try
     {
-        stoi(ui->textEditAge->toPlainText().toStdString());
-        stoi(ui->textEditWeight->toPlainText().toStdString());
+        bool isNormalFields = true;
+        if (stoi(ui->textEditAge->toPlainText().toStdString()) < 0)
+            isNormalFields = false;
+        if (stoi(ui->textEditWeight->toPlainText().toStdString()) < 0)
+            isNormalFields = false;
         if (ui->label_6->isVisible())
-            stoi(ui->textEditTail->toPlainText().toStdString());
+            if (stoi(ui->textEditTail->toPlainText().toStdString()) < 0)
+                isNormalFields = false;
+        if (!isNormalFields)
+        {
+            QMessageBox message;
+            message.setWindowTitle("ERROR");
+            message.addButton("Ок", QMessageBox::NoRole);
+            message.setText("Введите положительные числа!");
+            message.exec();
+            return false;
+        }
     } catch (...)
     {
         QMessageBox message;
         message.setWindowTitle("ERROR");
         message.addButton("Ок", QMessageBox::NoRole);
         message.setText("Введите корректные числа!");
-        message.show();
+        message.exec();
         return false;
     }
 
@@ -243,7 +255,7 @@ bool IgoninDialog::checkFields()
         message.setWindowTitle("ERROR");
         message.addButton("Ок", QMessageBox::NoRole);
         message.setText("Выберите цвет!");
-        message.show();
+        message.exec();
         return false;
     }
 
@@ -253,7 +265,7 @@ bool IgoninDialog::checkFields()
         message.setWindowTitle("ERROR");
         message.addButton("Ок", QMessageBox::NoRole);
         message.setText("Выберите тип питания!");
-        message.show();
+        message.exec();
         return false;
     }
 
@@ -273,7 +285,7 @@ unordered_map<string, string> IgoninDialog::GetFields()
     newTableObj.insert({"Тип питания", to_string(ui->listBoxNutrition->currentIndex() - 1)});
 
 
-    if (ui->label_6->isVisible())
+    if (ui->label_6->isVisible()) // проверка рептилия ли
     {
         if (ui->checkBoxPoisonous->checkState())
             newTableObj.insert({"Ядовитость", "ядовито"});

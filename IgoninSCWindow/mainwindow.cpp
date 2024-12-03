@@ -153,8 +153,14 @@ void MainWindow::setScrolls()
 
 void MainWindow::paintTable(QPainter& painter)
 {
-    auto drawTextFunc = static_cast<void (QPainter::*)(int, int, const QString&)>(&QPainter::drawText);
-    auto drawCell = std::bind(drawTextFunc, &painter, placeholders::_1, placeholders::_2, placeholders::_3);
+    using DrawTextFunctionType = void (QPainter::*)(int, int, const QString&);
+    DrawTextFunctionType drawTextFunc = &QPainter::drawText;
+    auto drawCell = [&painter, drawTextFunc](int x, int y, const QString& text) {
+        (painter.*drawTextFunc)(x, y, text);
+    };
+
+    //auto drawTextFunc = static_cast<void (QPainter::*)(int, int, const QString&)>(&QPainter::drawText);
+    //auto drawCell = std::bind(drawTextFunc, &painter, placeholders::_1, placeholders::_2, placeholders::_3);
 
     pair<int, int> pos = startPos;
     for (int inx = 0; inx < tableParams.head.size(); inx++)
@@ -195,7 +201,8 @@ void MainWindow::paintTable(QPainter& painter)
         pos.first += tableParams.columnWidths[tableParams.head[inx]];
     }
 
-    painter.drawLine(startPos.first - mergeWidth / 2, startPos.second + mergeHeight / 2,
+    if (tableParams.head.size() > 0)
+        painter.drawLine(startPos.first - mergeWidth / 2, startPos.second + mergeHeight / 2,
                      pos.first - mergeWidth / 2, startPos.second + mergeHeight / 2);
 }
 
@@ -219,7 +226,7 @@ void MainWindow::on_ButtonMenuFile_triggered()
         return;
     }
 
-    string convertedFilename = filename.toStdString();
+    string convertedFilename = filename.toLocal8Bit().toStdString();
     string message = forest.Load(convertedFilename);
 
     if (message.empty())
@@ -268,7 +275,7 @@ void MainWindow::on_ButtonMenuSave_triggered()
         return;
     }
 
-    string convertedFilename = filename.toStdString();
+    string convertedFilename = filename.toLocal8Bit().toStdString();
 
     string message = forest.Save(convertedFilename);
 
