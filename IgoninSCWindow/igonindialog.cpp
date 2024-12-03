@@ -18,12 +18,15 @@ IgoninDialog::IgoninDialog(QWidget *parent)
     for (string nutrition : IgoninAnimal::nutritionTypes)
         ui->listBoxNutrition->addItem(QString::fromStdString(nutrition));
 
+    //inx = 0;
+    viewObjectAttributes();
     toViewMode();
 }
 
 void IgoninDialog::inputTable(vector<unordered_map<string, string>>& table)
 {
     this->table = &table;
+    inx = this->table->size() - 1;
     updateTable();
 }
 
@@ -88,7 +91,7 @@ void IgoninDialog::updateTable()
         QString rowText = QString::fromStdString(row["id"] + ")").leftJustified(10, ' ')  + QString::fromLocal8Bit(row["Имя"].c_str());
         ui->listWidgetAnimal->addItem(rowText);
     }
-    if (inx >= 1)
+    if (inx >= 0)
     {
         ui->listWidgetAnimal->setCurrentRow(inx);
         viewObjectAttributes();
@@ -200,7 +203,10 @@ void IgoninDialog::on_buttonComplete_clicked()
 
         if (!ui->listWidgetAnimal->isEnabled())
         {
-            newTableObj.insert({"id", to_string(stoi((*table)[table->size() - 1]["id"]) + 1)});
+            if (table->size() == 0)
+                newTableObj.insert({"id", "1"});
+            else
+                newTableObj.insert({"id", to_string(stoi((*table)[table->size() - 1]["id"]) + 1)});
             table->push_back(newTableObj);
             if (ui->label_6->isVisible())
                 forest->addReptileMap(newTableObj);
@@ -323,7 +329,7 @@ void IgoninDialog::on_buttonDeleteAnimal_clicked()
         msgBox.addButton("Нет", QMessageBox::NoRole);
         msgBox.addButton("Да", QMessageBox::YesRole);
         auto reply = msgBox.exec();
-
+        clearFields();
         if (reply == 3)
         {
             (*table).erase((*table).begin() + inx);
