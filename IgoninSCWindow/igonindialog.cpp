@@ -148,6 +148,7 @@ void IgoninDialog::toViewMode()
     ui->listWidgetAnimal->setDisabled(false);
     ui->buttonComplete->setVisible(false);
     ui->buttonHaram->setVisible(false);
+    ui->buttonDeleteAnimal->setDisabled(false);
 }
 
 void IgoninDialog::toAddMode()
@@ -157,6 +158,7 @@ void IgoninDialog::toAddMode()
     ui->buttonComplete->setVisible(true);
     ui->buttonHaram->setVisible(true);
     ui->listWidgetAnimal->setDisabled(true);
+    ui->buttonDeleteAnimal->setDisabled(true);
 }
 
 void IgoninDialog::toChangeMode()
@@ -165,6 +167,7 @@ void IgoninDialog::toChangeMode()
     ui->buttonComplete->setVisible(true);
     ui->buttonHaram->setVisible(true);
     ui->listWidgetAnimal->setDisabled(false);
+    ui->buttonDeleteAnimal->setDisabled(false);
 }
 
 
@@ -221,6 +224,8 @@ void IgoninDialog::on_buttonComplete_clicked()
         }
         toChangeMode();
     }
+    else
+        return;
     updateTable();
 }
 
@@ -329,14 +334,19 @@ void IgoninDialog::on_buttonDeleteAnimal_clicked()
         msgBox.addButton("Нет", QMessageBox::NoRole);
         msgBox.addButton("Да", QMessageBox::YesRole);
         auto reply = msgBox.exec();
-        clearFields();
         if (reply == 3)
         {
+            clearFields();
             (*table).erase((*table).begin() + inx);
             forest->deleteAnimal(inx);
             if (inx >= ui->listWidgetAnimal->count() - 1)
                 inx -= 1;
+            toViewMode();
             updateTable();
+        }
+        else
+        {
+            return;
         }
     }
 }
