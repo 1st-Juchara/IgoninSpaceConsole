@@ -191,7 +191,7 @@ void IgoninDialog::on_buttonAddAnimal_clicked()
     }
     else
     {
-        toAddMode();
+        toViewMode();
     }
 
 }
@@ -341,7 +341,10 @@ void IgoninDialog::on_buttonDeleteAnimal_clicked()
             forest->deleteAnimal(inx);
             if (inx >= ui->listWidgetAnimal->count() - 1)
                 inx -= 1;
-            toViewMode();
+            if (table->size() == 0)
+                on_buttonAddAnimal_clicked();
+            else
+                toViewMode();
             updateTable();
         }
         else
